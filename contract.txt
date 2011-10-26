@@ -1,0 +1,53 @@
+
+<html>
+<head>
+<title>Contract Creation</title>
+<h1>Rate Your Mate </h1>
+</head>
+<body>
+<h2>Contract Creation</h2>
+
+<div align="left">
+<h3>Project Id</h3>
+<select name="Project ID">
+
+<option value="Rate Your Mate 1"> Rate Your Mate 1 </option>
+<option value="Rate Your Mate 2">Rate Your Mate 2</option>
+<option value="Rate Your mate 3">Rate Your Mate 3</option>
+</select>
+</div>
+<h1> Group Goals </h1>
+
+<div style="height:120px;width:450px;font:16px/26px Georgia, Garamond, Serif;overflow:scroll;">
+textetxtextexttextextextetxttxtxtxtxtxtxtxtxxtxtxtxtxtxtxtxtxttxtxtxtxxxxxxxxxxxxtxtxtxtxtxtxxtxtx
+</div>
+<div align = "left">
+<h1> Behaviors Required</h1>
+<h3>Behavior1</h3> <textarea rows="2" cols="75">
+Behavior 1
+</textarea>
+
+
+
+<h3> Behavior2</h3> <textarea rows = "2" cols="75">
+Behavior 2
+</textarea>
+
+
+
+<h3> Behavior3</h3> <textarea rows = "2" cols="75">
+Behavior 3
+</textarea>
+
+<h3> Behavior4</h3> <textarea rows = "2" cols="75">
+Behavior 4
+</textarea>
+
+<h3> Additional Comments </h3> <textarea rows ="4" cols = "75">
+Comments
+</textarea>
+<p>Student Screen</p> <button type="button">Submit!</button> <button type="button">Accept</button><button type="button">Cancel</button>
+<p>Instructor Screen Screen</p> <button type="button">Submit!</button> <button type="button">Accept</button><button type="button">Cancel</button>
+</div>
+</body>
+</html>
