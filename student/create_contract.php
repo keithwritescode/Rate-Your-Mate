@@ -6,6 +6,9 @@
 
 <head>
 
+ <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js'></script>
+ <script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js'></script>
+
 <title>Rate Your Mate</title>
 
 </head>
@@ -22,6 +25,7 @@
 
 </div>
 
+<body>
 
 <div id="content">
 
@@ -41,113 +45,13 @@
 
 <p> How many behaviors will your contract contain? </p>
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
+<input type="number" id="groupText" name="numGroups" value="1" size="4" min="1" max="6"/>
 
-<script type="text/javascript">
+<div id='behaviors' class='behaviors'>
+<h4> Behavior 1 </h4>
+<textarea class="behaviorText" rows="2" cols="20"></textarea>
+</div>
 
-$(document).ready(function() {
-
-$('#btnAdd').click(function() {
-
-var num = $('.clonedInput').length; // how many "duplicatable" input fields we currently have
-
-var newNum = new Number(num + 1); // the numeric ID of the new input field being added
-
-$('#groupText').attr('value', newNum);
-
-// create the new element via clone(), and manipulate it's ID using newNum value
-
-var newElem = $('#input' + num).clone().attr('id', 'input' + newNum);
-
-// manipulate the name/id values of the input inside the new element
-
-newElem.children(':first').attr('id', 'name' + newNum).attr('name', 'name' + newNum);
-
-// insert the new element after the last "duplicatable" input field
-
-$('#input' + num).after(newElem);
-
-// enable the "remove" button
-
-$('#btnDel').attr('disabled','');
-
-// business rule: you can only add 5 names
-
-if (newNum == 20 )
-
-$('#btnAdd').attr('disabled','disabled');
-
-});
-
-$('#btnDel').click(function() {
-
-var num = $('.clonedInput').length; // how many "duplicatable" input fields we currently have
-
-$('#input' + num).remove(); // remove the last element
-
-$('#groupText').attr('value', num-1);
-
-// enable the "add" button
-
-$('#btnAdd').attr('disabled','');
-
-// if only one element remains, disable the "remove" button
-
-if (num-1 == 1)
-
-$('#btnDel').attr('disabled','disabled');
-
-});
-
-$('#groupText').change(function() {
-
-var num = $( '.clonedInput' ).length;
-
-var newNum = new Number( $('#groupText').attr('value') );
-
-$i = num+1;
-
-// If the new number is greater, add form elements
-
-while ($i < newNum ){
-
-// create the new element via clone(), and manipulate it's ID using newNum value
-
-var newElem = $('#input' + num).clone().attr('id', 'input' + i);
-
-// manipulate the name/id values of the input inside the new element
-
-newElem.children(':first').attr('id', 'name' + i).attr('name', 'name' + i);
-
-// insert the new element after the last "duplicatable" input field
-
-$('#input' + num).after(newElem);
-
-}
-
-});
-
-});
-</script>
-</head>
-
-
-<div id="content">
-
-Number of Behaviors:
-<?php // Have a spinner that will increment, passes the max/min value in with it, so can resuse the JS for mulitple spinners ?>
-<table cellpadding="0" cellspacing="0" border="0">
-
-<tr>
-<td rowspan="2"><input type="text" id="groupText" name="numGroups" value="1" style="width:50px;height:23px;font-weight:bold;" onchange="checkGroupValue();"/></td>
-<td><input type="button" id="btnAdd" value=" /\ " onclick="incrementSpinNum(20)" style="font-size:7px;margin:0;padding:0;width:20px;height:13px;" ></td>
-</tr>
-<tr>
-<td><input type="button" id="btnDel" value=" \/ " onclick="decrementSpinNum(1)" style="font-size:7px;margin:0;padding:0;width:20px;height:12px;" ></td>
-</tr>
-</table>
-
-Behavior: <input type="text" name="behavior" /> <br />
 
 <br/>
 
@@ -163,6 +67,52 @@ Behavior: <input type="text" name="behavior" /> <br />
 <input type="submit" value='Accept'/>
 
 <input type="submit" value='Cancel'/>
-</div>
+
+
+
+
+
+
+</body>
+
+
+<script type="text/javascript">
+$(document).ready(function () {
+	$('#groupText').keyup(function() {
+		var num = $( '#groupText' ).attr('value');
+		var max = $( '#groupText' ).attr( 'max' );
+		
+		if ( num > max ){ 
+			$( '#groupText' ).attr( 'value', max );	
+		}
+		$( '#groupText' ).click();
+		
+	});
+	$('#groupText').click(function() {
+		var num = $( '.behaviorText' ).length;
+
+		var newNum = Number( $('#groupText').attr('value') );
+		newNum = Math.round(newNum);
+
+		// If adding to the form
+		if (num < newNum ) {
+			for ( var i = num + 1; i <= newNum; i++ ) {
+				var insertHtml =
+                          		'<h4> Behavior ' + i +  '</h4>' + 
+                          		'<textarea id="b' + i +
+					'" class="behaviorText" rows="2" cols="20"></textarea>';
+				$('.behaviors').append(insertHtml);
+
+			}
+		}
+		if ( num > newNum) {
+			for ( var i = num; i > newNum; i-- ) {
+				$('.behaviorText:last').remove();	
+			}
+		}
+	});
+});
+</script>
+
 
 </html>
