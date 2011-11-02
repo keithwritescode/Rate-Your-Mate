@@ -1,0 +1,132 @@
+body {
+	background: #000;
+	color: #fff;
+	text-align: center;
+}
+#pie {
+	position: relative;
+	margin: 0 auto;
+	width: 30em;
+	height: 30em;
+	overflow: hidden;
+	font-size: 10px;
+}
+.pie {
+	width: 0;
+	height: 0;
+}
+#pie img {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 30em;
+	height: 30em;
+	z-index: 255;
+}
+#pie #spinner {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 4em;
+	height: 4em;
+	margin: -2em 0 0 -2em;
+	display: none;
+}
+.bg {
+	width: 15em;
+	height: 15em;
+}
+
+.sector-1, .sector-2, .sector-3, .sector-4 {
+	position: absolute;
+}
+.sector-1 {
+	bottom: 15em;
+	left: 15em;
+}
+.sector-2 {
+	right: 15em;
+	bottom: 15em;
+}
+.sector-3 {
+	right: 15em;
+	top: 15em;
+}
+.sector-4 {
+	left: 15em;
+	top: 15em;
+}
+
+.pie-label {
+	position: absolute;
+	width: 15em;
+	text-align: center;
+	margin: 14em 0 0 7.5em;
+	z-index: 100000;
+	color: #000;
+}
+.pie-label span {
+	font-size: 1.5em;
+	line-height: 2;
+	font-family: "Myriad Pro", "Lucida Grande", Verdana, sans-serif;
+	text-shadow: #000 0 2px 5px;
+}
+input {
+	background: #fff;
+	color: #000;
+}
+input.error {
+	color: #f00;
+}
+input.flickr {
+	color: #00f;
+}
+button {
+	margin: 0;
+	padding: .2em;
+	background: none;
+	border: none;
+}
+button img {
+	width: 2em;
+	height: 2em;
+}
+
+.opacity9 {
+	opacity: .9;
+}
+.opacity8 {
+	opacity: .8;
+}
+.opacity7 {
+	opacity: .7;
+}
+.opacity6 {
+	opacity: .6;
+}
+.opacity5 {
+	opacity: .5;
+}
+.opacity4 {
+	opacity: .4;
+}
+.opacity3 {
+	opacity: .3;
+}
+.opacity2 {
+	opacity: .2;
+}
+.opacity1 {
+	opacity: .1;
+}
+.opacity0 {
+	opacity: 0;
+}
+
+#valid {
+	width: 1.25em;
+	height: 1.25em;
+	vertical-align: middle;
+	margin-right: -1.25em;
+	visibility: hidden;
+}
