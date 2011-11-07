@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>Pie Chart (JavaScript edition)</title>
+	<style type="text/css" media="screen">
+		@import"piechart.css";
+	</style>
+	<!--[if lt IE 7]>
+		<style type="text/css" media="screen">
+			@import"piechart-ie.css";
+		</style>
+	<![endif]-->
+	<script type="text/javascript" charset="utf-8" src="piechart.js"></script>
+	<script type="text/javascript" charset="utf-8" src="ajax.js"></script>
+	<script type="text/javascript" charset="utf-8" src="local.js"></script>
+</head>
+<body>
+	<div id="pie">
+		<span id="for-ie"><img src="pie-1.png" alt="" id="circle" /></span>
+		<img src="loadb.gif" alt="loadingâ€¦" id="spinner" />
+	</div>
+	<form action="#no_javascript-no_fun" id="pie-form">
+		<div>
+			<input id="test" value="2, 5, 10, 1" />
+			<img src="!.png" id="valid" alt="!" />
+			<div>
+				<button type="submit">
+					<img src="go.png" alt="Update" title="update" />
+				</button>
+				<button type="button" id="rot-cc">
+					<img src="rot2.png" alt="Rotate clockwise" title="rotate clockwise" />
+				</button>
+				<button type="button" id="rot-acc">
+					<img src="rot1.png" alt="Rotate anti-clockwise" title="rotate anti-clockwise" />
+				</button>
+				<button type="button" id="perc">
+					<img src="percent.png" alt="Percentage view on/off" title="percentage view on/off" />
+				</button>
+			</div>
+		</div>
+	</form>
+</body>
+</html>
