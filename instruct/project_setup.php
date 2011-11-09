@@ -57,7 +57,19 @@ error_reporting(-1);
 			
 		</div>
 		
-		
+		<div id='contractSubmission' >
+			<p> Who submits the contract? </p>
+			<input type="radio" name="contractSubmit" value="0" /> Student <br/>
+			<input type="radio" name="contractSubmit" value="1" /> Teacher <br/>
+		</div>
+		<div id='gradeSubmit' >
+			<p> Do you want to submit a grade for: </p>
+			<input type="radio" name="gradeSubmit" value="0" /> Evaluatee Only <br/>
+                        <input type="radio" name="gradeSubmit" value="1" /> Evaluator Only <br/>
+                        <input type="radio" name="gradeSubmit" value="2" /> Both Evaluator and Evaluatee <br/>
+                        <input type="radio" name="gradeSubmit" value="3" /> None <br/>
+	
+		</div>		
 		<p> Number of points to be allocated </p>
 		<input id="pointAlloc" type="number" name="pointAlloc" value="1" size="4" min="1" max="100" />
 	

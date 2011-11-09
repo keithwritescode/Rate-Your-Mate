@@ -7,7 +7,8 @@
 	$prjID += 1;
 	// Insert into project field
 	mysql_query ("INSERT INTO Project (PrjName, NumGroups, ContractCreator, GradeSubmission, NumEvaluations, TotalPoints)
-		VALUES ('".$_POST['projectID']. "', ".$_POST['numGroups'].", 2, 2, ".$_POST['numEval'].", ".$_POST['pointAlloc'].")" );
+		VALUES ('".$_POST['projectID']. "', ".$_POST['numGroups'].", " . $_POST['contractSubmit'] . ", " .  
+			$_POST['gradeSubmit'] . ", " . $_POST['numEval'].", ".$_POST['pointAlloc'].")" );
 		
 	// Get each available date for evaluatees and evaluators
 	$dateArr;
