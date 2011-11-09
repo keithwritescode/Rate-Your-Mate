@@ -1,11 +1,12 @@
 $(document).ready(function() {
 
 	$('#groupText').keyup(function() {
-		var num = $( '.group' ).length;
+		var num = new Number( $('#groupText').attr('value') );
 		var max = $( '#groupText' ).attr( 'max' );
-		if ( num > max ) 
-			$( '#groupText' ).attr( 'value', max )	
 
+		if ( num > max ) {
+			$( '#groupText' ).attr( 'value', max )	
+		}
 		$( '#groupText' ).click();
 		
 	});
@@ -21,7 +22,7 @@ $(document).ready(function() {
 			
             // If the new number is greater, add form elements
             for ( var i = num + 1; i <= newNum; i++ ) {   
-			var insertHtml = '<h6><a href="#"> Group ' + i + '</a> </h3>' +
+			var insertHtml = '<h3><a href="#"> Group ' + i + '</a> </h3>' +
 							 '<div id="groups-' + i + '" class="group">' +
 								'<ul id="g' + i + '" class="dragging dropping">' + 
 									'<li class="placeholder"> Drag names here </li>' +
@@ -92,17 +93,7 @@ $(document).ready(function() {
 	}
    });
      
-});   
-function detach(){
-    lay  = document.getElementById('rosterSource');
-    left = getXCoord(lay);
-    top  = getYCoord(lay);
-    lay.style.position = 'absolute';
-    lay.style.top      = top;
-    lay.style.left     = left;
-    getFloatLayer('rosterSource').initialize();
-    alignFloatLayers();
-}
+});
 
 function makeDrop (id) {
 $(id + " ul").droppable({
@@ -112,14 +103,18 @@ $(id + " ul").droppable({
 	drop: function(event,ui){
 		// If the place holder is there, remove it	
 		$(this).find( ".placeholder" ).remove();
-		
+	 	var elem = $(this);	
 		// Remove the element from everywhere else	
 		var element = document.getElementById(ui.draggable.attr('id'))
 		if (element != null)
 			element.parentNode.removeChild(element);	
 		// Add it in			
 		$('<li id="' + ui.draggable.attr('id') +
-			'" class="ui-draggable">' + ui.draggable.html()+"</li>").appendTo(this);
+			'" class="ui-draggable">' + ui.draggable.html()+"</li>" + 
+                        '<input type="hidden" name="groups[' + this.id + '][' +
+                        elem.children().length + ']" value="' +
+                        ui.draggable.attr('id') + '" />' +
+                        '</li>').appendTo(this);
 		// Make the new list object draggable
 		$('#' + this.id + ' li').draggable({
 			appendTo: "body",
