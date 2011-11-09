@@ -1,7 +1,7 @@
 <?php
 // error_reporting(-1);
 include ("includes/login.php");
-include ("includes/menu.php");
+include ("includes/loginMenu.php");
 
 $_SESSION['roster'] = array(
     array("screenname" => "kmreynolds1", "name" => "Kris Reynolds", "id" => 1),
