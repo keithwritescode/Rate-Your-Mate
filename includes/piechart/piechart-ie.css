@@ -1,0 +1,47 @@
+.sector-1, .sector-2, .sector-3, .sector-4 {
+	color: #000;
+	filter: progid:DXImageTransform.Microsoft.Chroma(color=black);
+}
+#pie img {
+	display: none;
+}
+#for-ie {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: block;
+	width: 30em;
+	height:  30em;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='pie-1.png',sizingMethod='scale');
+	z-index: 255;
+}
+.opacity9 {
+	filter: alpha(opacity=90);
+}
+.opacity8 {
+	filter: alpha(opacity=80);
+}
+.opacity7 {
+	filter: alpha(opacity=70);
+}
+.opacity6 {
+	filter: alpha(opacity=60);
+}
+.opacity5 {
+	filter: alpha(opacity=50);
+}
+.opacity4 {
+	filter: alpha(opacity=40);
+}
+.opacity3 {
+	filter: alpha(opacity=30);
+}
+.opacity2 {
+	filter: alpha(opacity=20);
+}
+.opacity1 {
+	filter: alpha(opacity=10);
+}
+.opacity0 {
+	filter: alpha(opacity=0);
+}
