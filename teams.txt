@@ -1,8 +1,6 @@
 Team 1
 ------
-Benjamin Bielicki(lead)
-Kris Reynolds
-Keith Hallock
+Tyler Ferm
 
 Team 2
 ------
