@@ -1,0 +1,17 @@
+.ui-datepicker {
+	margin-left: 40px;
+	margin-top: -160px;
+	z-index: 1000;
+	font-size: 62.5%;
+}
+
+#rosterSource {
+	float: right;
+	width: 30%;
+}
+
+#groups {
+	font-size: 62.5%;
+	width: 60%;	
+	margin-right: 50px;
+}
