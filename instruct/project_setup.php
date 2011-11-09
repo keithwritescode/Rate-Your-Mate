@@ -38,7 +38,7 @@ error_reporting(-1);
             </ul>
         </div>
 			
-		<input type="number" id="groupText" name="numGroups" value="2" />
+		<input type="number" id="groupText" name="numGroups" value="2" min="1"/>
 		
 		<div id='groups' class='groups' >			
 			<h3><a href="#"> Group 1 </a> </h3>
@@ -113,61 +113,15 @@ error_reporting(-1);
 		$( "#groups" ).accordion();
 		$( ".avail" ).datepicker({ minDate: 0, maxDate: "+9M"});
 		$( ".due" ).datepicker({ minDate: 0, maxDate: "+9M"});
+		makeDrop( "#groups-1" );
+		makeDrop( "#groups-2" );
 	});
+	
 	// Make all student names draggable
 	 $(".dragging li").draggable({
 		appendTo: "body",
 		helper: "clone"
 	});
-	// Not working!!!
-	$(".dropping ul").droppable({
-		activeClass: "ui-state-highlight",
-		hoverClass: "ui-state-hover",
-		accept: ":not(.ui-sortable-helper)",
-		drop: function(event,ui){
-			// If the place holder is there, remove it	
-			$(this).find( ".placeholder" ).remove();
-			var elem = $(this);
-
-			// Remove the element from everywhere else	
-			var element = document.getElementById(ui.draggable.attr('id'))
-			if (element != null)
-				element.parentNode.removeChild(element);	
-			// Add it in			
-			$('<li id="' + ui.draggable.attr('id') +
-				'" class="ui-draggable">' + ui.draggable.html()+
-				// Add an input
-				'<input type="hidden" name="groups[' + this.id + '][' + 
-					elem.children().length + ']" value="' + 
-					ui.draggable.attr('id') + '" />' + 
-					'</li>').appendTo(this);
-			// Make the new list object draggable
-			$('#' + this.id + ' li').draggable({
-				appendTo: "body",
-				helper: "clone"
-			});
-
-			// If any ul is empty, put a place holder in it
-			$("ul", "#rosterSource").each(
-				function() {
-					var elem = $(this);
-					if (elem.children().length == 0) {
-						$('<li class="placeholder"> Drag names here </li>').appendTo(this);
-					}
-				}
-			);
-			// If any ul is empty, put a place holder in it
-			$("ul").each(
-				function() {
-					var elem = $(this);
-					if (elem.children().length == 0) {
-						$('<li class="placeholder"> Drag names here </li>').appendTo(this);
-					}
-				}
-			);			
-		}
-	});
-
 </script>
 </html>
 

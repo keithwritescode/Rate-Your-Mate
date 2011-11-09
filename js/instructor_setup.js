@@ -44,7 +44,7 @@ $(document).ready(function() {
 				// add the stuff from the old list to the roster
 				$('#g' + i + ' li' ).appendTo('#rosterList');
 				$('#groups-' + i).remove();
-				$('#groups h6:last-child').remove();
+				$('#groups h3:last-child').remove();
 			}
 			// Remove any place holders that may have been put on the roster
 			$('#rosterList .placeholder').remove();
@@ -95,6 +95,7 @@ $(document).ready(function() {
      
 });
 
+// Make all lists droppable
 function makeDrop (id) {
 $(id + " ul").droppable({
 	activeClass: "ui-state-highlight",
@@ -120,7 +121,25 @@ $(id + " ul").droppable({
 			appendTo: "body",
 			helper: "clone"
 		});
-					
+
+		// If any ul is empty, put a place holder in it
+		$("ul", "#rosterSource").each(
+			function() {
+				var elem = $(this);
+				if (elem.children().length == 0) {
+					$('<li class="placeholder"> Drag names here </li>').appendTo(this);
+				}
+			}
+		);
+		// If any ul is empty, put a place holder in it
+		$("ul").each(
+			function() {
+				var elem = $(this);
+				if (elem.children().length == 0) {
+					$('<li class="placeholder"> Drag names here </li>').appendTo(this);
+				}
+			}
+		);				
 	}
 });
 }
