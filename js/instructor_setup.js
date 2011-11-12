@@ -2,7 +2,7 @@ $(document).ready(function() {
 
 	$('#groupText').keyup(function() {
 		var num = new Number( $('#groupText').attr('value') );
-		var max = $( '#groupText' ).attr( 'max' );
+		var max = new Number( $( '#groupText' ).attr( 'max' ) );
 
 		if ( num > max ) {
 			$( '#groupText' ).attr( 'value', max )	
@@ -53,11 +53,11 @@ $(document).ready(function() {
    });
 
    $('#numEval').keyup(function() {
-   	var num = $( '.submitDate' ).length;
-        var max = $( '#numEval' ).attr( 'max' );
+   	var num = new Number ( $('#numEval').attr('value') );
+        var max = new Number ( $('#numEval').attr( 'max' ) );
         if ( num > max )
         	$( '#numEval' ).attr( 'value', max )
-                $( '#numEval' ).click();
+        $( '#numEval' ).click();
    });
 
 
