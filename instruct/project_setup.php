@@ -38,7 +38,7 @@ error_reporting(-1);
             </ul>
         </div>
 			
-		<input type="number" id="groupText" name="numGroups" value="2" min="1"/>
+		<input type="number" id="groupText" name="numGroups" value="2" min="1" max="25"/>
 		
 		<div id='groups' class='groups' >			
 			<h3><a href="#"> Group 1 </a> </h3>
@@ -74,7 +74,7 @@ error_reporting(-1);
 		<input id="pointAlloc" type="number" name="pointAlloc" value="1" size="4" min="1" max="100" />
 	
 		<p> Number of Evaluations </p>
-		<input id="numEval" type="number" name="numEval" value="2" min="1" max="100" />
+		<input id="numEval" type="number" name="numEval" value="2" min="1" max="20" />
 		<p> Evaluation Dates </p>
 		<div id="submitDate">
 			<div class="submitDate">
