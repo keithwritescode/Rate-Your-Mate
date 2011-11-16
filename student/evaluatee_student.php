@@ -32,6 +32,8 @@
 
 <strong>Student Reviews<strong>
 
+</br>
+</br>
 
 <font size="2" >Below is your group members evaluation of your work based on behaviors in their contract.</font>
 
@@ -41,19 +43,40 @@
 
 
 
+<?php
 
-<p align="left">
-<strong>Behavior One</strong>
+include ("../includes/config.php");
+include ("../includes/opendb.php");
+
+$query="SELECT c.Comment, c.SrcId FROM Comments c";
+
+$result=mysql_query($query);
+
+echo "<table border='1'>
+
+<tr>
+
+<th>Student Reviews</th>
+<th>Comments</th>
+</tr>";
+
+while($row = mysql_fetch_array($result))
+  {
+
+ echo "<tr>";
+
+ echo "<td>" . $row['Comment'] . "</td>";
+
+ echo "<td>" . $row['SrcId'] . "</td>";
+
+  echo "</tr>";
+  }
+
+echo "</table>";
 
 
 
-</p>
-
-</br>
-
-<form action="process.php" method="POST">
-
-<textarea wrap="virutal" name="comments" rows="5" cols="50">Holder for student reviews</textarea>
+?>
 
 
 

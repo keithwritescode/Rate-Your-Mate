@@ -1,6 +1,5 @@
 <html>
 
-
 <div id="head">
 
 <head>
@@ -29,8 +28,6 @@
 <p align="left">
 
 
-<strong>Student Reviews<strong>
-
 </br>
 
 <font size="2" >Below are evaluations of group members each based on behaviors in their contract.</font>
@@ -39,25 +36,46 @@
 
 </p>
 
+<?php
+
+include ("../includes/config.php");
+include ("../includes/opendb.php");
+
+$query="SELECT c.Comment, c.SrcId FROM Comments c";
+
+$result=mysql_query($query);
+
+echo "<table border='1'>
+
+<tr>
+
+<th>Student Reviews</th>
+<th>Comments</th>
+</tr>";
+
+while($row = mysql_fetch_array($result))
+  {
+
+ echo "<tr>";
+
+ echo "<td>" . $row['Comment'] . "</td>";
+
+ echo "<td>" . $row['SrcId'] . "</td>";
+
+  echo "</tr>";
+  }
+
+echo "</table>";
 
 
 
-<p align="left">
-<strong>Behavior One</strong>
+?>
 
 
-
-</p>
 
 </br>
 
-<form action="process.php" method="POST"> 
 
-<textarea wrap="virutal" name="comments" rows="5" cols="50">Holder for student reviews</textarea>
-
-
-
-</form>
 
 <p>Based on evaluations, select student's grade</p>
 
