@@ -5,6 +5,8 @@ echo $_POST['message'] . '<br />';
 include ("includes/login.php");
 include ("includes/loginMenu.php");
 
+$_SESSION['userID'] = 4;
+$_SESSION['prjID'] = 72;
 $_SESSION['roster'] = array(
     array("screenname" => "kmreynolds1", "name" => "Kris Reynolds", "id" => 1),
     array("screenname" => "bpbielicki", "name" => "Ben Bielicki", "id" => 2),
@@ -16,8 +18,8 @@ $_SESSION['roster'] = array(
     array("screenname" => "cbecker", "name" => "Chris Becker", "id" => 8),
     array("screenname" => "jcormier", "name" => "Joe Cormier", "id" => 9),
     array("screenname" => "cstoner", "name" => "Cara Stoner", "id" => 10)
-)
- 
+);
+
 ?>
 
 
