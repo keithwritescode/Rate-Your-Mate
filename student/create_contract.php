@@ -56,7 +56,6 @@ $studentID = 4;
 							B.BehaviorID = C.BehaviorID AND 
 							C.ContractID = " . $prjID[0] );
 			$numResults = mysql_num_rows($groupQuery);
-
 			?>
 			<textarea wrap="virutal" name="groupGoals" rows="5" cols="50"></textarea>
 
