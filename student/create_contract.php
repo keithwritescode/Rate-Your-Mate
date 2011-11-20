@@ -5,7 +5,7 @@ include ("../includes/config.php");
 include ("../includes/opendb.php");
 
 $studentID = 4;
-
+$prjID = 72;
 ?>
 <html>
 	<head>
@@ -27,74 +27,60 @@ $studentID = 4;
 		</div>		
 
 		<div id="content">
-
-			<p>Project I.D.</p>
-			
-			<select>
-				<?php
-				$query = mysql_query( " SELECT P.PrjName, P.PrjID FROM Project P, Groups G " .
-						" WHERE G.StudentID = " . $studentID . " AND " .
-						"P.PrjID = G.PrjID;" ); 
-			 	$i = 0;
-				while ( $row = mysql_fetch_array($query) ) { 
-					echo '<option value = "' . $row['PrjID'] . '">' . $row['PrjName'] . 
-						'</option>';	
-         				$prjID[$i++] = $row['PrjID'];
-				}
-				?>			  
-			</select>
-
-			<br/>
-
-			<p>Group Goals<p/>
 			<?php
-			// Fetch all Contract to do with this project and student
-			$contractQuery = mysql_query ( " SELECT C.* FROM Contracts C, Groups G WHERE
-						C.GrpID = G.GrpID AND G.StudentID = ".$studentID );
+			// Get the Group ID
+			$groupIDQuery = mysql_query ( " SELECT G.GrpID FROM Groups G WHERE
+                                G.PrjID = ".$prjID." AND
+                                G.StudentID = ".$studentID.";" );
+			$groupID = mysql_fetch_array ( $groupIDQuery );
+			$groupID = $groupID['GrpID'];
 			// Get all behaviors for the group
-			$groupQuery = mysql_query ( " SELECT B.* FROM Behaviors B, Contracts C WHERE
-							B.BehaviorID = C.BehaviorID AND 
-							C.ContractID = " . $prjID[0] );
-			$numResults = mysql_num_rows($groupQuery);
+			$groupQuery = mysql_query ( " SELECT * FROM Behaviors WHERE
+                              GrpID = " . $groupID . ";" );
+			$numResults = mysql_num_rows( $groupQuery );
+	
 			?>
-			<textarea wrap="virutal" name="groupGoals" rows="5" cols="50"></textarea>
-
-			<p> How many behaviors will your contract contain? </p>
-			<input type="number" id="groupText" name="numGroups" value="<?php
-				if ($numResults > 0)
-					echo $numResults;
-				else
-					echo 1; ?>" size="4" min="1" max="6"/>
-
-			<div id='behaviors' class='behaviors'>
-				<?php
-				// Write in all behaviors
-				$numResults = mysql_num_rows($groupQuery);
-				$i = 0;
-				if ( $numResults > 0 ) {
-					while ( $row = mysql_feth_array($groupQuery) ) {
-						echo '<h4> Behavior ' . $i++ . ' <h4>';
-						echo '<textarea class="behavioText" rows="2" cols="20">'.
-							$row['Description'] . '</textarea>';								}
-				}
-				// If there arent any previous fields provide one empty one
-				else {
-					echo '<h4> Behavior 1 </h4>';
-					echo '<textarea class="behaviorText" rows="2" cols="20"></textarea>';
-				}
-
-				?>
-			</div>
-
-			<br/>
-
-			<p>Additional Comments<p/>
-			<textarea wrap="virutal" name="additional" rows="5" cols="50"></textarea>
-			<br/>
-
-			<input type="submit" value='Submit Contract'/>
-			<input type="submit" value='Accept'/>
-			<input type="submit" value='Cancel'/>
+			<form id="contractsetup" name="contractsetup" action="submitcontract.php" method="post">
+				<p> Group Goals </p>
+				<textarea wrap="virutal" name="groupGoals" rows="5" cols="50"></textarea>
+				
+				<p> How many behaviors will your contract contain? </p>
+				<input type="number" id="groupText" name="numBehaviors" value="<?php
+					if ($numResults > 0)
+						echo $numResults;
+					else
+						echo 1; ?>" 
+					size="4" min="1" max="6"/>
+	
+				<div id='behaviors' class='behaviors'>
+					<?php
+					// Write in all behaviors
+					$numResults = mysql_num_rows($groupQuery);
+					$i = $numResults;
+					if ( $numResults > 0 ) {
+						while ( $row = mysql_fetch_array($groupQuery) ) {
+							echo '<h4> Behavior ' . $i . ' <h4>';
+							echo '<textarea class="behaviorText" name="behavior['.$i++.']" rows="2" cols="20">'.
+								$row['Description'] . '</textarea>';								}
+					}
+					// If there arent any previous fields provide one empty one
+					else {
+						echo '<h4> Behavior 1 </h4>';
+						echo '<textarea class="behaviorText" name="behavior[0]" rows="2" cols="20"></textarea>';
+					}
+	
+					?>
+				</div>
+	
+				<br />
+	
+				<p>Additional Comments<p/>
+				<textarea wrap="virutal" name="additional" rows="5" cols="50"></textarea>
+				<br />
+				<input type="hidden" name="studentID" value="<?php echo $studentID; ?>" />
+				<input type="hidden" name="prjID" value="<?php echo $prjID ?>" />
+				<input type="submit" value='Accept'/>
+			</form>
 		</div>
 	</body>
 
@@ -123,7 +109,7 @@ $(document).ready(function () {
 				var insertHtml =
                           		'<h4> Behavior ' + i +  '</h4>' + 
                           		'<textarea id="b' + i +
-					'" class="behaviorText" rows="2" cols="20"></textarea>';
+					'" class="behaviorText" name="behavior[' + i + ']" rows="2" cols="20"></textarea>';
 				$('.behaviors').append(insertHtml);
 
 			}
