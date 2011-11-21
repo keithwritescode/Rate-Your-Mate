@@ -20,23 +20,19 @@ $groupQueryString = ("SELECT G.StudentID
 // Get the behavior list
 $behaviorQuery = mysql_query ( "SELECT B.Description
 				FROM Behaviors B
-				WHERE B.PrjID = '$prjID' 
-				AND B.GrpID = ( SELECT G.GrpID FROM
-					Groups G WHERE G.StudentID = '$studentID');") or die(mysql_error());
-// ***************************** DELETE WHEN IT WORKS		
-
-
-// ***************************** DELETE WHEN IT WORKS	
+				WHERE B.GrpID = ( SELECT G.GrpID FROM
+					Groups G WHERE G.StudentID = '$studentID');") or die(mysql_error());	
 
 ?>
 
 
 <html>
-	<head>
-		<title>Rate Your Mate</title>
-		
-
-	</head>
+<head>
+	<title>Rate Your Mate</title>
+	<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+	<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js'></script>
+    	<script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js'></script>
+</head>
 <body>
 
 <div id="header">
@@ -56,7 +52,7 @@ $behaviorQuery = mysql_query ( "SELECT B.Description
 	</div>
 
 	<form action="submitStudentInput.php" method="POST"> 
-
+	
 		<?php
 		$behaviorCnt = 1;
 		// Go through each behavior
@@ -67,19 +63,21 @@ $behaviorQuery = mysql_query ( "SELECT B.Description
 			echo '<p> ' . $brow['Description'] . '</p>';
 			$studentCnt = 1;
 			$groupQuery = mysql_query ( $groupQueryString );
+			echo '<div class="ac" >';
 			// List a box for each student in the group
 			while ( $srow = mysql_fetch_array( $groupQuery ) ) {
-				echo '<h5> Student Name goes here ' . $studentCnt . '</h5>';
-				echo '<textarea name=student['.$srow['StudentID'].']['.$behaviorCnt.']
-					rows="5" cols="50">Student ID '.$srow['StudentID'].'</textarea>';
+				echo '<h3> <a href="#"> Student Name goes here ' . $studentCnt . '</a></h3>';
+				echo '<div><textarea name=student['.$srow['StudentID'].']['.$behaviorCnt.']
+					rows="5" cols="50">Student ID '.$srow['StudentID'].'</textarea></div>';
 				$studentCnt++;
 			}
 			$behaviorCnt++;
-			echo '</div>';
+			echo '</div> </div>';
 		}
-
-
 		?>
+		
+		<input type="hidden" name="userID" value=<?php echo $studentID; ?> />
+		<input type="hidden" name="prjID" value=<?php echo $prjID; ?> />
 		<div id="piechart" >
 			<h4> Overall </h4>
 			<textarea rows="5" cols="50">Holder for Pie Chart!!1!1</textarea>
@@ -87,4 +85,16 @@ $behaviorQuery = mysql_query ( "SELECT B.Description
 		<input type="submit" value="Submit" />
 	</form>
 </body>
+
+<script>
+	$(function() {
+
+	
+		$( ".ac" ).accordion({
+			autoHeight: false,
+			navigation: true	
+		});
+	
+	});
+</script>
 </html>	
