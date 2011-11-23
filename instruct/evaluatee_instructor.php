@@ -14,11 +14,7 @@
 </div>
 
 <div id="menu">
-
-
-<?php include ("../includes/menu.php"); ?>
-
-
+<?php include ("../includes/instruct_menu.php"); ?>
 </div>
 
 
