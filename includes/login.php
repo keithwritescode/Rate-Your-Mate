@@ -3,7 +3,6 @@
 
 include 'security_functions.php';
 $username = casify();
-echo 'welcome '.$username;
 
 // At log in start the session
 $a = session_id();

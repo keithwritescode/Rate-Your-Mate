@@ -1,12 +1,17 @@
 <?php
-// Echo any submission
-echo $_POST['message'] . '<br />';
-// error_reporting(-1);
-include ("includes/login.php");
-include ("includes/loginMenu.php");
+//echo $_POST['message'] . '<br />';
 
-$_SESSION['userID'] = 4;
-$_SESSION['prjID'] = 72;
+include ("includes/login.php");
+echo '<input type="hidden" name="back" value="'.$_POST['message'].'">';
+if ( $_SESSION[ 'userType' ] == 'faculty' ) {
+	echo '<META HTTP-EQUIV="Refresh" Content="0; URL=instruct/index.php">';	
+	exit;
+}
+else if ( $_SESSION[ 'userType' ] == 'student' ) {
+	echo '<META HTTP-EQUIV="Refresh" Content="0; URL=student/index.php">';
+	exit;
+}
+
 $_SESSION['roster'] = array(
     array("screenname" => "kmreynolds1", "name" => "Kris Reynolds", "id" => 1),
     array("screenname" => "bpbielicki", "name" => "Ben Bielicki", "id" => 2),

@@ -1,26 +1,21 @@
+<?php include ("../includes/check_authorization.php");
+error_reporting(-1);
 
+// Connect to the database
+include ("../includes/config.php");
+include ("../includes/opendb.php");
+?>
 <html>
-
-
-<div id="head">
-
 <head>
-
         <title>Rate Your Mate</title>
-
-
 </head>
 
-<h2>Student Evaluation Page</h2>
-
+<body>
+	<h1>Student Evaluation Page</h1>
 </div>
 
 <div id="menu">
-
-
-<?php include ("../includes/menu.php"); ?>
-
-
+	<?php include ("../includes/student_menu.php"); ?>
 </div>
 
 
@@ -44,10 +39,6 @@
 
 
 <?php
-
-include ("../includes/config.php");
-include ("../includes/opendb.php");
-
 $query="SELECT c.Comment, c.SrcId FROM Comments c";
 
 $result=mysql_query($query);
