@@ -84,7 +84,7 @@ error_reporting(-1);
 		<h3><p> Evaluation Dates </p></h3>
 		<div id="submitDate">
 			<div class="submitDate">
-				<h3> Evaluation 1 </h3>
+				<h4> Evaluation 1 </h4>
 				Evaluatior: <br />
 				Available From
 				<input class="avail" name="evalt[avail][0]"/> 
@@ -97,11 +97,7 @@ error_reporting(-1);
 			</div>
 			
 			<div class='submitDate'>
-<<<<<<< HEAD
-				<h3> Evaluation 2 </h3>
-=======
 				<h4> Evaluation 2 </h4>
->>>>>>> d6be3de64909d82353c1eae66194359b186b4a6a
 				Evaluatior: <br />
 				 Available From
 				<input class="avail" name="evalt[avail][1]"/>
