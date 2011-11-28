@@ -38,7 +38,7 @@ if ( !empty( $_SESSION['crsID'] ) ) {
 		$project[$cnt]['prjID'] = $row['PrjID'];
 		$project[$cnt]['prjName'] = $row['PrjName'];
 		// Set aside the name of the current project
-		if ( $project[$cnt]['prjID'] == $_SESSION['prjID'] )
+		if ( !empty( $_SESSION['prjID'] ) && $project[$cnt]['prjID'] == $_SESSION['prjID'] )
 			$prjName = $project[$cnt]['prjName'];
 		// Increment the count for the array
 		$cnt++;
