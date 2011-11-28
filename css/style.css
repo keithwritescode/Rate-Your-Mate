@@ -23,24 +23,10 @@ h1 {
 	color: #878282;
 
 	text-shadow: black 0.1em 0.1em 0.2em;
-      		     
 }
 
-h2 {
-	margin: 0px;
-	padding: 0px 0px 20px 0px;
-	letter-spacing: -2px;
-	font-size: 2.8em;
-	color: #FFFFFF;
-}
-
-h3 {
+h2, h3, h4{
 	text-shadow: black 0.2em 0.2em 0.4em;
-}
-
-h4 {
-	margin: 0px
-	letter-spacing: -1px;
 }
 
 p, ul, ol {
@@ -56,7 +42,7 @@ ul, ol {
 
 #header {
 	text-align: center;	
-	width: 400px;
+	width: 0px auto;
 	height: 50px;
 	margin: 0 auto;
 	padding: 0px;
@@ -139,6 +125,14 @@ ul, ol {
 	border: 5px solid gray;
 }
 
+#border1 {
+	height: 0px auto;
+	width: 400px;
+	padding: 10px;
+	margin: 10px;
+	border: 5px solid gray;
+}
+
 #rosterSource {
 	position:fixed;
 	top:0px auto;
@@ -182,3 +176,11 @@ ul, ol {
 	margin: 0px auto;
 }
 
+#behaviors {
+	text-align: center;
+	font-size: 17px;
+	position: fixed;
+        top: 150px;
+        right: 350px;
+
+}

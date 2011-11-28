@@ -11,14 +11,17 @@ $prjID = $_SESSION['prjID'];
 	<head>
 		<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js'></script>
 		<script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js'></script>
+		
+		<link rel="stylesheet" type="text/css" href="../css/dateStyle.css" />
+    		<link rel="stylesheet" type="text/css" href="../css/style.css" />
 
 		<title>Rate Your Mate</title>
 
 	</head>
 
 	<body>
-		<div id="head">
-			<h2>Create Contract for <?php echo $prjID; ?></h2>
+		<div id="header">
+			<h1>Create Contract for <?php echo $prjID; ?></h1>
 		</div>	
 
 		<div id="menu">
@@ -26,6 +29,7 @@ $prjID = $_SESSION['prjID'];
 		</div>		
 
 		<div id="content">
+		<div id="border1">
 			<?php
 			// Get the id of a group
 			$groupIDQuery = mysql_query ( " SELECT G.GrpID FROM Groups G WHERE
@@ -43,10 +47,11 @@ $prjID = $_SESSION['prjID'];
 				GrpID = " . $groupID . ";" );
 			$contractInfo = mysql_fetch_array ( $contractInfoQuery );
 			?>
+		
 			<form id="contractsetup" name="contractsetup" action="submitcontract.php" method="post">
 				<p> Group Goals </p>
 				<textarea wrap="virutal" name="groupGoals" rows="5" cols="50"> <?php echo $contractInfo['Goals']; ?> </textarea>
-				
+		</div>		
 				<p> How many behaviors will the contract contain? </p>
 				<input type="number" id="groupText" name="numBehaviors" value="<?php
 					if ($numResults > 0)
@@ -54,7 +59,7 @@ $prjID = $_SESSION['prjID'];
 					else
 						echo 1; ?>" 
 					size="4" min="1" max="6"/>
-	
+		
 				<div id='behaviors' class='behaviors'>
 					<?php
 					// Write in all behaviors
@@ -73,13 +78,13 @@ $prjID = $_SESSION['prjID'];
 	
 					?>
 				</div>
-	
 				<br />
-	
+		<div id="border1">
 				<p>Additional Comments<p/>
 				<textarea wrap="virutal" name="additional" rows="5" cols="50"> <?php echo $contractInfo['Comments']; ?> </textarea>
 				<br />
 				<input type="hidden" name="prjID" value="<?php echo $prjID ?>" />
+		</div>
 				<input type="submit" value='Accept'/>
 			</form>
 		</div>

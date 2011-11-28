@@ -18,14 +18,16 @@ if ( !empty( $_POST['groupID'] ) )
 	<head>
 		<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js'></script>
 		<script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js'></script>
-
+		
+		<link rel="stylesheet" type="text/css" href="../css/dateStyle.css" />
+    		<link rel="stylesheet" type="text/css" href="../css/style.css" />
 		<title>Rate Your Mate</title>
 
 	</head>
 
 	<body>
-		<div id="head">
-			<h2>View Contract for <?php echo $prjName; ?></h2>
+		<div id="header">
+			<h1>View Contract for <?php echo $prjName; ?></h1>
 		</div>	
 
 		<div id="menu">
@@ -33,6 +35,7 @@ if ( !empty( $_POST['groupID'] ) )
 		</div>		
 
 		<div id="content">
+		<div id="border">
 			<?php
 			// Get all groups for this project
 			$groupIDQuery = mysql_query ( " SELECT G.GrpID FROM Groups G WHERE
@@ -79,32 +82,36 @@ if ( !empty( $_POST['groupID'] ) )
 				GrpID = " . $_SESSION['GrpID'] . ";" );
 			$contractInfo = mysql_fetch_array ( $contractInfoQuery );
 			?>
+		</div>
+
+		<div id="border1">
 			<h4> Group Goals </h4>
 			<textarea readonly="readonly" wrap="virutal" name="groupGoals" rows="5" cols="50"> <?php echo $contractInfo['Goals']; ?> </textarea>
 			
-			<div id='behaviors' class='behaviors'>
+						
+			<div id="behaviors" class="behaviors">
 				<?php
 				// Write in all behaviors
 				$i = 1;
 				if ( $numResults > 0 ) {
 					while ( $row = mysql_fetch_array($groupQuery) ) {
-						echo '<h4> Behavior ' . $i . ' </h4>';
+						echo '<h3> Behavior ' . $i . ' </h3>';
 						echo '<textarea readonly="readonly" class="behaviorText" name="behavior['.$i++.']" rows="2" cols="20">'.
 							$row['Description'] . '</textarea>';								}
 				}
 				// If there arent any previous fields provide one empty one
 				else {
-					echo '<h4> Behavior 1 </h4>';
+					echo '<h5>  Behavior 1 </h5>';
 					echo '<textarea readonly="readonly" class="behaviorText" name="behavior[0]" rows="2" cols="20"></textarea>';
 				}
 				?>
 			</div>
-	
+		
 			<br />
 	
-			<h4>Additional Comments</h4>
-			<textarea readonly="readonly" wrap="virutal" name="additional" rows="5" cols="50"> <?php echo $contractInfo['Comments']; ?> </textarea>
-			<?php } ?>
+			<h3>Additional Comments</h3>
+			<textarea readonly="readonly" wrap="virutal" name="additional" rows="5" cols="50"> <?php echo $contractInfo['Comments']; ?> </textarea>			<?php } ?>
+		</div>
 		</div>
 	</body>
 </html>
