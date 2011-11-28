@@ -11,7 +11,6 @@ if ( !empty( $_POST['projectSelect'] ) )
 	$_SESSION['prjID'] = $_POST['projectSelect'];
 
 // For now hardwire in the roster
-
 $_SESSION['roster'] = array(
     array("screenname" => "kmreynolds1", "name" => "Kris Reynolds", "id" => 1),
     array("screenname" => "bpbielicki", "name" => "Ben Bielicki", "id" => 2),
@@ -26,20 +25,26 @@ $_SESSION['roster'] = array(
 );
 
 // Get the roster for the class selected and store it into roster of session
-
+if ( empty( $_SESSION['crsID'] ) )
+	$_SESSION['crsID'] = 1;
 
 // Get all the projects assocated with the current class
 if ( !empty( $_SESSION['crsID'] ) ) {
 	$projectQueryString = ('SELECT P.PrjID, P.PrjName FROM Project P WHERE P.CourseID = ' . $_SESSION['crsID'] . ';' );
 	$projectQuery = mysql_query ( $projectQueryString );
-}
-
-if ( !empty( $_SESSION['prjID'] ) ) {
-	// Get the name of the project
-	$projectNameQueryString = ('SELECT P.PrjName FROM Project P WHERE P.PrjID = ' . $_SESSION['prjID'] . ';' );
-	$projectNameQuery = mysql_query ( $projectNameQueryString );
-	$prjName = mysql_fetch_array ( $projectNameQuery );
-	$prjName = $prjName['PrjName'];
+	$cnt=0;
+	// Create an array of projects associated with this course
+	while ( $row = mysql_fetch_array( $projectQuery ) ) {	
+		$project[$cnt]['prjID'] = $row['PrjID'];
+		$project[$cnt]['prjName'] = $row['PrjName'];
+		// Set aside the name of the current project
+		if ( $project[$cnt]['prjID'] == $_SESSION['prjID'] )
+			$prjName = $project[$cnt]['prjName'];
+		// Increment the count for the array
+		$cnt++;
+	}
+	if ( empty ( $_SESSION['prjID'] ) )
+		$_SESSION['prjID'] = $project[0]['prjID'];
 }
 ?>
 <html>
@@ -65,18 +70,13 @@ if ( !empty( $_SESSION['prjID'] ) ) {
 		<?php include ("../includes/instruct_menu.php"); ?>
 	</div>
 
-	<div id="content">
-		
+	<div id="content">	
 		<div id="projectSelect">
 			<form id='projectForm' name="instructorHome"
 				action="index.php" method="post" >
-			<?php
-			if ( empty ( $_SESSION['crsID'] ) ) { 
-				echo '<p> Choose a course to select a Rate-Your-Mate project </p>';
-			} 
-			else {
-				echo '<p> Class ' . $_SESSION['crsID'] . ' is selected, change course? </p>';
-			} ?>
+			<?php			
+			echo '<p> Class ' . $_SESSION['crsID'] . ' is selected, change course? </p>';
+			?>
 			<select id='classSelect' name='classSelect' onchange='this.form.submit()'>
 				<?php
 				for ( $i = 1; $i <= 2; $i++ ) {
@@ -87,23 +87,27 @@ if ( !empty( $_SESSION['prjID'] ) ) {
 				}
 				?>
 			</select>
-			
-			<?php 
-			if ( empty ( $_SESSION['prjID'] ) ) { 
-				echo '<p> No project selected, select a project or create a new one to begin </p>';
+			<?php
+			if ( !empty( $prjName ) ) { 
+				echo '<p> Project ' . $prjName . ' selected, change project? </p>';
 			}
 			else {
-				echo '<p> Project ' . $prjName . ' selected, change project? </p>';
-			} ?>
-			<select id='projectSelect' name='projectSelect' 
+				echo '<p> Select a project or create a new one to begin </p>';
+			}
+			?>
+
+			<select id='projectSelect' name='projectSelect'
 				<?php if (empty($_SESSION['crsID'])) echo 'disabled="disabled"'?> onchange='this.form.submit()'>
 				<?php // Compile a list of all projects for this class
-				while ( $project = mysql_fetch_array( $projectQuery ) ) {
-					if ( $project['PrjID'] == $_SESSION['prjID'] )
+				foreach ( $project as $prj ) {
+					print_r ($prj);
+					if ( $prj['prjID'] == $_SESSION['prjID'] )
 						$defaultString = 'selected="selected"';
 					else $defaultString = '';
-					echo '<option value="' . $project['PrjID'] . '" ' . $defaultString . '>' . $project['PrjName'] . ' </option>';
+					echo '<option value="' . $prj['prjID'] . '" ' . $defaultString . '>' . $prj['prjName'] . ' </option>';
 				}
+				if ( empty ( $_SESSION['prjID'] ) )
+					echo '<option selected="selected"> Select a project </option>';
 				?>
 			</select>
 				

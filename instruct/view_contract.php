@@ -38,14 +38,17 @@ if ( !empty( $_POST['groupID'] ) )
 		<div id="border">
 			<?php
 			// Get all groups for this project
-			$groupIDQuery = mysql_query ( " SELECT G.GrpID FROM Groups G WHERE
+			$groupIDQuery = mysql_query ( " SELECT DISTINCT G.GrpID FROM Groups G WHERE
                                 G.PrjID = ".$prjID);
 			$cnt = 1;
 			?>
+			
 			<form id='groupSelectForm' name='form' action="view_contract.php" method="post">
 			<select name="groupID" onchange='this.form.submit()'>
+			
 			<?php
 			while ( $groupID = mysql_fetch_array ( $groupIDQuery ) ) {
+				print_r($groupID);
 				$groupIDArr[$cnt] = $groupID['GrpID'];
 				if ( $_SESSION['GrpID'] == $groupID['GrpID'] )
 					$defaultString = 'selected="selected"';
