@@ -7,12 +7,16 @@ include ("../includes/opendb.php");
 ?>
 <html>
 <head>
+	<link rel="stylesheet" type="text/css" href="../css/dateStyle.css" />
+	<link rel="stylesheet" type="text/css" href="../css/style.css" />
+
+		
 	<title>Rate Your Mate</title>
 </head>
 
 <body>
-<div id="head">
-	<h2>Instructor Evaluation</h2>
+<div id="header">
+	<h1>Instructor Evaluation</h1>
 </div>
 
 <div id="menu">
@@ -21,7 +25,7 @@ include ("../includes/opendb.php");
 
 
 <div id="content">
-	<p>Below are evaluations of group members each based on behaviors in their contract.</p>
+	<h4><p>Below are evaluations of group members each based on behaviors in their contract.</p></h4>
 
 	<?php
 	$query="SELECT c.Comment, c.SrcId FROM Comments c";
@@ -42,6 +46,8 @@ include ("../includes/opendb.php");
   	}
 	echo "</table>";
 	?>
+
+     <div id="border">
        <form action="process.php" method="POST">
 		<p>Based on evaluations, select student's grade</p>
 		<select name="grade">
@@ -57,14 +63,17 @@ include ("../includes/opendb.php");
 			<option value="d+">D+</option>
 			<option value="d">D</option>
 			<option value="d-">D-</option>
-		</select> 
-
+		</select>
+     </div>
+ 
+     <div id="border1">
 		<p>Add any comments for the student</p>
  		<textarea wrap="virutal" name="comments" rows="5" cols="50">Comment</textarea>
 	</form>
-
+     </div>
 	<button type="button">Save Changes</button>
 	<button type="button">Send to Student</button>
+     
 </div>
 
 </body>

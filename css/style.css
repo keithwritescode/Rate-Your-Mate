@@ -127,7 +127,7 @@ ul, ol {
 
 #border1 {
 	height: 0px auto;
-	width: 400px;
+	width: 420px;
 	padding: 10px;
 	margin: 10px;
 	border: 5px solid gray;
@@ -181,6 +181,6 @@ ul, ol {
 	font-size: 17px;
 	position: fixed;
         top: 150px;
-        right: 350px;
+        right:210px;
 
 }
