@@ -1,6 +1,10 @@
 <?php include ("../includes/check_authorization.php");
 error_reporting(-1);
 
+
+include ( "../includes/config.php" );
+include ( "../includes/opendb.php" );
+
 if ( !empty( $_POST['classSelect'] ) )
 	$_SESSION['crsID'] = $_POST['classSelect'];
 if ( !empty( $_POST['projectSelect'] ) ) 
@@ -23,6 +27,19 @@ $_SESSION['roster'] = array(
 
 // Get the roster for the class selected and store it into roster of session
 
+
+// Get all the projects assocated with the current class
+if ( !empty( $_SESSION['crsID'] ) ) {
+	$projectQueryString = ('SELECT P.PrjID, P.PrjName FROM Project P WHERE P.CourseID = ' . $_SESSION['crsID'] . ';' );
+	$projectQuery = mysql_query ( $projectQueryString );
+}
+
+if ( !empty( $_SESSION['prjID'] ) ) {
+	// Get the name of the project
+	$projectNameQueryString = ('SELECT P.PrjName FROM Project P WHERE P.PrjID = ' . $_SESSION['prjID'] . ';' );
+	$projectNameQuery = mysql_query ( $projectNameQueryString );
+	$prjName = mysql_fetch_array ( $projectNameQuery );
+}
 ?>
 <html>
 <head>
@@ -39,6 +56,7 @@ $_SESSION['roster'] = array(
 		if ( !empty( $_POST['message'] ) )
 			echo '<p>' . $_POST['message'] . '</p>';
 		?>
+	</div>
 	<div id="header">
 		<h1> Instructor Home </h1>
 	</div>
@@ -59,8 +77,14 @@ $_SESSION['roster'] = array(
 				echo '<p> Class ' . $_SESSION['crsID'] . ' is selected, change course? </p>';
 			} ?>
 			<select id='classSelect' name='classSelect' onchange='this.form.submit()'>
-				<option value="1"> Course 1 </option>
-				<option value="2"> Course 2 </option>
+				<?php
+				for ( $i = 1; $i <= 2; $i++ ) {
+					if ( $i == $_SESSION['crsID'] )
+						$defaultString = 'selected="selected"';
+					else $defaultString = '';
+					echo '<option value="' . $i . '" ' . $defaultString . '> Course ' . $i . '</option>';
+				}
+				?>
 			</select>
 			
 			<?php 
@@ -68,12 +92,18 @@ $_SESSION['roster'] = array(
 				echo '<p> No project selected, select a project or create a new one to begin </p>';
 			}
 			else {
-				echo '<p> Project ' . $_SESSION['prjID'] . ' selected, change project? </p>';
+				echo '<p> Project ' . $prjName . ' selected, change project? </p>';
 			} ?>
 			<select id='projectSelect' name='projectSelect' 
 				<?php if (empty($_SESSION['crsID'])) echo 'disabled="disabled"'?> onchange='this.form.submit()'>
-				<option value="72"> Project 1 </option>
-				<option value="73"> Project 2 </option>
+				<?php // Compile a list of all projects for this class
+				while ( $project = mysql_fetch_array( $projectQuery ) ) {
+					if ( $project['PrjID'] == $_SESSION['prjID'] )
+						$defaultString = 'selected="selected"';
+					else $defaultString = '';
+					echo '<option value="' . $project['PrjID'] . '" ' . $defaultString . '>' . $project['PrjName'] . ' </option>';
+				}
+				?>
 			</select>
 				
 			</form>

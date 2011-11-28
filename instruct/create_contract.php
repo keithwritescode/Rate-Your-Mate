@@ -34,7 +34,7 @@ $prjID = $_SESSION['prjID'];
 			$groupID = $groupID['GrpID'];
 			
 			// Get all behaviors for the group
-			$groupQuery = mysql_query ( " SELECT * FROM Behaviors WHERE
+			$groupQuery = 1; echo ( " SELECT * FROM Behaviors WHERE
                               GrpID = " . $groupID . ";" );
 			$numResults = mysql_num_rows( $groupQuery );
 			
@@ -42,7 +42,6 @@ $prjID = $_SESSION['prjID'];
 			$contractInfoQuery = mysql_query (" SELECT * FROM ContractInfo WHERE 
 				GrpID = " . $groupID . ";" );
 			$contractInfo = mysql_fetch_array ( $contractInfoQuery );
-			print_r($contractInfo);	
 			?>
 			<form id="contractsetup" name="contractsetup" action="submitcontract.php" method="post">
 				<p> Group Goals </p>
