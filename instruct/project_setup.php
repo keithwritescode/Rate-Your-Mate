@@ -14,7 +14,7 @@ error_reporting(-1);
 <body>   
   <div id="header">
         <h1> Instructor Setup </h1>
-    </div>
+  </div>
 
    <div id="menu">
       <?php include ("../includes/instruct_menu.php"); ?>
@@ -39,7 +39,7 @@ error_reporting(-1);
 			
 		<input type="number" id="groupText" name="numGroups" value="2" min="1" max="25"/>
 		
-		<div id='groups' class='groups' >			
+		<div id="groups" class="groups" >			
 			<h3><a href="#"> Group 1 </a> </h3>
 			<div id="groups-1" class="dropping group">
 				<ul class="dragging dropping" id="g1">
@@ -58,13 +58,13 @@ error_reporting(-1);
 	</div>	
 	
 	<div id="border">
-		<div id='contractSubmission' >
+		<div id="contractSubmission" >
 			<h3><p> Who submits the contract? </p></h3>
 			<input type="radio" name="contractSubmit" value="0" /> Student <br/>
 			<input type="radio" name="contractSubmit" value="1" /> Teacher <br/>
 		</div>
 		
-		<div id='gradeSubmit' >
+		<div id="gradeSubmit" >
 			<h3><p> Do you want to submit a grade for: </p></h3>
 			<input type="radio" name="gradeSubmit" value="0" /> Evaluatee Only <br/>
                         <input type="radio" name="gradeSubmit" value="1" /> Evaluator Only <br/>
@@ -80,16 +80,11 @@ error_reporting(-1);
 		
 	</div>
 	
-	<div id="border1">
+	<div id="border2">
 		<h3><p> Evaluation Dates </p></h3>
-		<div id="submitDate">
-<<<<<<< HEAD
+
 			<div id="border">
-			<div id ="submitDate">
-=======
-			
-			<div id="submitDate">
->>>>>>> 3ed3b5eba7f6c6b4679235c2e8ccb7c108e1297d
+			<div class="submitDate">
 				<h4> Evaluation 1 </h4>
 				Evaluatior: <br />
 				Available From
@@ -101,17 +96,11 @@ error_reporting(-1);
 				Due Date
 				<input class="due" name="evale[due][0]"/>
 			</div>
-<<<<<<< HEAD
 			</div>
 			
 			<div id="border">
-			<div id="submitDate">
+			<div class="submitDate">
 				<h4> Evaluation 2 </h4>
-=======
-					
-			<div id="submitDate">
-				<h4>Evaluation 2 </h4>
->>>>>>> 3ed3b5eba7f6c6b4679235c2e8ccb7c108e1297d
 				Evaluatior: <br />
 				 Available From
 				<input class="avail" name="evalt[avail][1]"/>
@@ -122,12 +111,9 @@ error_reporting(-1);
 				Due Date
 				<input class="due" name="evale[due][1]"/>
 			</div>
-<<<<<<< HEAD
 			</div>
-=======
-			
->>>>>>> 3ed3b5eba7f6c6b4679235c2e8ccb7c108e1297d
-		</div>
+
+		
 		<input type="hidden" value="<?php echo $_SESSION['crsID']; ?>" name="crsID" />
 		<input type="submit" value="Submit" />
 	</div>
@@ -151,5 +137,4 @@ error_reporting(-1);
 	});
 </script>
 </html>
-
 
