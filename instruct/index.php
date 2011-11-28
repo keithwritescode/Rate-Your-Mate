@@ -65,6 +65,5 @@ if ( !empty( $_POST['projectSelect'] ) )
 			</form>
 		</div>
 	</div>
-
 </body>
 </html>

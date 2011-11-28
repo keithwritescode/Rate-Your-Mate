@@ -12,8 +12,8 @@ error_reporting(-1);
     <link rel="stylesheet" type="text/css" href="../css/dateStyle.css" />
     <link rel="stylesheet" type="text/css" href="../css/style.css" />
 </head>
-<body> 
-    <div id="header">
+<body>   
+  <div id="header">
         <h1> Instructor Setup </h1>
     </div>
 
@@ -24,16 +24,16 @@ error_reporting(-1);
    <div id="content">
       <form id="instructor_setup" name="instructorsetup" 
             action="updateInstruct.php" method="post"  >
-         Project I.D.: <input type="text" name="projectID" />    <br />
+        <div id="border"> 
+	 Project I.D.: <input type="text" name="projectID" />    <br />
          Number of Groups: 
-        
-         
+              
         <div id="rosterSource" class="dropping" >
-			<h4> Roster </h4>
+			<h3> Roster </h3>
             <ul name="roster" id="rosterList" class="dragging dropping">
 				<?php
-				foreach ( $_SESSION['roster'] as &$student ) 
-				echo '<li id="'.$student['id'].'">'.$student['name'].'</li>';    
+				foreach( $_SESSION['roster'] as &$student) 
+					echo '<li id="'.$student['id'].'">'.$student['name'].'</li>';    
 				?>
             </ul>
         </div>
@@ -56,14 +56,17 @@ error_reporting(-1);
 			</div>
 			
 		</div>
-		
+	</div>	
+	
+	<div id="border">
 		<div id='contractSubmission' >
-			<p> Who submits the contract? </p>
+			<h3><p> Who submits the contract? </p></h3>
 			<input type="radio" name="contractSubmit" value="0" /> Student <br/>
 			<input type="radio" name="contractSubmit" value="1" /> Teacher <br/>
 		</div>
+		
 		<div id='gradeSubmit' >
-			<p> Do you want to submit a grade for: </p>
+			<h3><p> Do you want to submit a grade for: </p></h3>
 			<input type="radio" name="gradeSubmit" value="0" /> Evaluatee Only <br/>
                         <input type="radio" name="gradeSubmit" value="1" /> Evaluator Only <br/>
                         <input type="radio" name="gradeSubmit" value="2" /> Both Evaluator and Evaluatee <br/>
@@ -75,10 +78,14 @@ error_reporting(-1);
 	
 		<p> Number of Evaluations </p>
 		<input id="numEval" type="number" name="numEval" value="2" min="1" max="20" />
-		<p> Evaluation Dates </p>
+		
+	</div>
+	
+	<div id="border">
+		<h3><p> Evaluation Dates </p></h3>
 		<div id="submitDate">
 			<div class="submitDate">
-				<h4> Evaluation 1 </h4>
+				<h3> Evaluation 1 </h3>
 				Evaluatior: <br />
 				Available From
 				<input class="avail" name="evalt[avail][0]"/> 
@@ -89,21 +96,22 @@ error_reporting(-1);
 				Due Date
 				<input class="due" name="evale[due][0]"/>
 			</div>
+			
 			<div class='submitDate'>
-							<h4> Evaluation 2 </h4>
-							Evaluatior: <br />
-							 Available From
-							<input class="avail" name="evalt[avail][1]"/>
-							Due Date
-							<input class="due" name="evalt[due][1]"/>
-							<br /> Evaluatee: <br />Available From
-							<input class="avail" name="evale[avail][1]"/>
-							Due Date
-							<input class="due" name="evale[due][1]"/>
+				<h3> Evaluation 2 </h3>
+				Evaluatior: <br />
+				 Available From
+				<input class="avail" name="evalt[avail][1]"/>
+				Due Date
+				<input class="due" name="evalt[due][1]"/>
+				<br /> Evaluatee: <br />Available From
+				<input class="avail" name="evale[avail][1]"/>
+				Due Date
+				<input class="due" name="evale[due][1]"/>
 			</div>
 		</div>
 		<input type="submit" value="Submit" />
-
+	</div>
       </form>
    </div>
 </body>

@@ -17,7 +17,7 @@ $prjID = 72;
 	</head>
 
 	<body>
-		<div id="head">
+		<div id="header">
 			<h2>Create Contract</h2>
 		</div>	
 
