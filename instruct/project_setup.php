@@ -83,7 +83,8 @@ error_reporting(-1);
 	<div id="border">
 		<h3><p> Evaluation Dates </p></h3>
 		<div id="submitDate">
-			<div class="submitDate">
+			
+			<div id="submitDate">
 				<h4> Evaluation 1 </h4>
 				Evaluatior: <br />
 				Available From
@@ -95,9 +96,9 @@ error_reporting(-1);
 				Due Date
 				<input class="due" name="evale[due][0]"/>
 			</div>
-			
-			<div class='submitDate'>
-				<h4> Evaluation 2 </h4>
+					
+			<div id="submitDate">
+				<h4>Evaluation 2 </h4>
 				Evaluatior: <br />
 				 Available From
 				<input class="avail" name="evalt[avail][1]"/>
@@ -108,6 +109,7 @@ error_reporting(-1);
 				Due Date
 				<input class="due" name="evale[due][1]"/>
 			</div>
+			
 		</div>
 		<input type="hidden" value="<?php echo $_SESSION['crsID']; ?>" name="crsID" />
 		<input type="submit" value="Submit" />
