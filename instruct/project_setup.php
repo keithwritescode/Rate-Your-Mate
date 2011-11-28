@@ -83,8 +83,13 @@ error_reporting(-1);
 	<div id="border1">
 		<h3><p> Evaluation Dates </p></h3>
 		<div id="submitDate">
+<<<<<<< HEAD
 			<div id="border">
 			<div id ="submitDate">
+=======
+			
+			<div id="submitDate">
+>>>>>>> 3ed3b5eba7f6c6b4679235c2e8ccb7c108e1297d
 				<h4> Evaluation 1 </h4>
 				Evaluatior: <br />
 				Available From
@@ -96,11 +101,17 @@ error_reporting(-1);
 				Due Date
 				<input class="due" name="evale[due][0]"/>
 			</div>
+<<<<<<< HEAD
 			</div>
 			
 			<div id="border">
 			<div id="submitDate">
 				<h4> Evaluation 2 </h4>
+=======
+					
+			<div id="submitDate">
+				<h4>Evaluation 2 </h4>
+>>>>>>> 3ed3b5eba7f6c6b4679235c2e8ccb7c108e1297d
 				Evaluatior: <br />
 				 Available From
 				<input class="avail" name="evalt[avail][1]"/>
@@ -111,7 +122,11 @@ error_reporting(-1);
 				Due Date
 				<input class="due" name="evale[due][1]"/>
 			</div>
+<<<<<<< HEAD
 			</div>
+=======
+			
+>>>>>>> 3ed3b5eba7f6c6b4679235c2e8ccb7c108e1297d
 		</div>
 		<input type="hidden" value="<?php echo $_SESSION['crsID']; ?>" name="crsID" />
 		<input type="submit" value="Submit" />

@@ -127,6 +127,14 @@ ul, ol {
 	border: 5px solid gray;
 }
 
+#border2 {
+	height: 100px;
+	width: 420px;
+	padding: 10px;
+	margin: 10px;
+	border 5px solid gray;
+}
+
 #rosterSource {
 	position:fixed;
 	top:0px auto;
@@ -157,18 +165,26 @@ ul, ol {
 }
 
 #submitDate {
+	float: left;
 	width: 300px;
 	margin: 10px;
 	text-align: center;	
 }
 
 #submitDate1 {
+<<<<<<< HEAD
 	width: 300px;
 	margin: 10px;
 	text-align: center;
 	margin-left: auto;
 	margin-right: auto;
 	width: 70%;
+=======
+	float: right;
+	width: 300px;
+	marding: 10px;
+	text-align: center;
+>>>>>>> 3ed3b5eba7f6c6b4679235c2e8ccb7c108e1297d
 }
 
 #projectSelect {
