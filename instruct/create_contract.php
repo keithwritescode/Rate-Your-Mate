@@ -34,7 +34,7 @@ $prjID = $_SESSION['prjID'];
 			$groupID = $groupID['GrpID'];
 			
 			// Get all behaviors for the group
-			$groupQuery = 1; echo ( " SELECT * FROM Behaviors WHERE
+			$groupQuery = mysql_query ( " SELECT * FROM Behaviors WHERE
                               GrpID = " . $groupID . ";" );
 			$numResults = mysql_num_rows( $groupQuery );
 			

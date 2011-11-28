@@ -39,6 +39,7 @@ if ( !empty( $_SESSION['prjID'] ) ) {
 	$projectNameQueryString = ('SELECT P.PrjName FROM Project P WHERE P.PrjID = ' . $_SESSION['prjID'] . ';' );
 	$projectNameQuery = mysql_query ( $projectNameQueryString );
 	$prjName = mysql_fetch_array ( $projectNameQuery );
+	$prjName = $prjName['PrjName'];
 }
 ?>
 <html>
