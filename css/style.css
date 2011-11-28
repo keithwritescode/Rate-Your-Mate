@@ -162,6 +162,15 @@ ul, ol {
 	text-align: center;	
 }
 
+#submitDate1 {
+	width: 300px;
+	margin: 10px;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	width: 70%;
+}
+
 #projectSelect {
 	text-align: center;
 	width:320px;
@@ -175,6 +184,6 @@ ul, ol {
 	font-size: 17px;
 	position: fixed;
         top: 150px;
-        right:210px;
+        right:320px;
 
 }
