@@ -4,8 +4,8 @@ error_reporting(-1);
 include ("../includes/config.php");
 include ("../includes/opendb.php");
 
-$studentID = 4;
 $prjID = $_SESSION['prjID'];
+
 ?>
 <html>
 	<head>
@@ -32,7 +32,7 @@ $prjID = $_SESSION['prjID'];
 		<div id="border1">
 			<?php
 			// Get the id of a group
-			$groupIDQuery = mysql_query ( " SELECT G.GrpID FROM Groups G WHERE
+			$groupIDQuery = mysql_query( " SELECT G.GrpID FROM Groups G WHERE
                                 G.PrjID = ".$prjID);
 			$groupID = mysql_fetch_array ( $groupIDQuery );
 			$groupID = $groupID['GrpID'];
