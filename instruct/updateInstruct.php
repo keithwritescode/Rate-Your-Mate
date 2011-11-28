@@ -47,12 +47,17 @@
 					$duetDate . "', '" . $availeDate . "', '" . $dueeDate . "')" );
 
 	}
+	// Find the highest group inserted
+	$maxGroup = mysql_query( "SELECT MAX(GrpID) FROM Groups" );
+	$maxGroup = mysql_fetch_array( $maxGroup );
+	$maxGroup = $maxGroup[0] + 1;
 	// Insert into groups
 	foreach ( $_POST['groups'] as $group ) {
 		foreach ( $group as $student ) {
-			mysql_query ( "INSERT INTO Groups (PrjID, StudentID, ContractApprove) " .
-				"VALUES (" . $prjID . ", " . $student . ", 0)" );
+			mysql_query ( "INSERT INTO Groups (GrpID, PrjID, StudentID, ContractApprove) " .
+				"VALUES (" . $maxGroup . ", " . $prjID . ", " . $student . ", 0)" );
 		}
+		$maxGroup++;
 	}
 	
 ?>
@@ -64,7 +69,7 @@
 	</head>
 	<body>
 	    <form id="instructor_setup" name="instructorsetup" 
-            action="../index.php" method="post"  >
+            action="index.php" method="post"  >
 			<input type="hidden" name="message" value="Project Creation Form successfully submitted!" />
 			<input id="submit" type="submit" value="Submit" />
 
@@ -74,7 +79,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$(function() {
-			$( "#submit" ).click();
+			//$('#submit').click();
 		});
 	});
 </script>

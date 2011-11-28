@@ -16,7 +16,7 @@ $groupQueryString = ( " SELECT B.* FROM Behaviors B WHERE
                               B.GrpID = ".$groupArr[0].";");
 $groupQuery = mysql_query($groupQueryString);
 $numResults = mysql_num_rows( $groupQuery );
-echo $numResults;
+
 // If $numResults is 0, submit everything
 if ( $numResults == 0 ) {
 	// Do for each group
@@ -65,7 +65,7 @@ foreach ( $groupArr as $groupID ) {
 <script type="text/javascript">
         $(document).ready(function() {
                 $(function() {
-        //                $( "#submit" ).click();
+                        $( "#submit" ).click();
                 });
         });
 </script>
