@@ -1,6 +1,5 @@
 <?php include ("../includes/check_authorization.php"); 
 error_reporting(-1);
-
 ?>
 <html>
 <head>
@@ -90,18 +89,19 @@ error_reporting(-1);
 				<input class="due" name="evale[due][0]"/>
 			</div>
 			<div class='submitDate'>
-							<h4> Evaluation 2 </h4>
-							Evaluatior: <br />
-							 Available From
-							<input class="avail" name="evalt[avail][1]"/>
-							Due Date
-							<input class="due" name="evalt[due][1]"/>
-							<br /> Evaluatee: <br />Available From
-							<input class="avail" name="evale[avail][1]"/>
-							Due Date
-							<input class="due" name="evale[due][1]"/>
+				<h4> Evaluation 2 </h4>
+				Evaluatior: <br />
+				 Available From
+				<input class="avail" name="evalt[avail][1]"/>
+				Due Date
+				<input class="due" name="evalt[due][1]"/>
+				<br /> Evaluatee: <br />Available From
+				<input class="avail" name="evale[avail][1]"/>
+				Due Date
+				<input class="due" name="evale[due][1]"/>
 			</div>
 		</div>
+		<input type="hidden" value="<?php echo $_SESSION['crsID']; ?>" name="crsID" />
 		<input type="submit" value="Submit" />
 
       </form>
