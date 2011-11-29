@@ -109,8 +109,6 @@ ul, ol {
 }
 
 
-
-
 #border {
 	height: 0px auto;
 	width: 300px;
@@ -136,19 +134,22 @@ ul, ol {
 }
 
 #rosterSource {
-	position:fixed;
-	top:0px auto;
-	right:150px;
+	position: relative;
+	width: 90px;
+	top: 0px;
+	right:-170px;
+	height: 100px;
 }	
 
 #groups {	
 	text-shadow: none;
 	font: 10px verdana, sans-serif;
-	width: 300px;
+	width: 210px;
 }
 
-#groups-1 {
-	width: 0px auto;	
+#groups-1{	
+	width: 165px;
+	text-align: left;	
 }
 
 #groups-2 {
@@ -168,23 +169,21 @@ ul, ol {
 	float: left;
 	width: 300px;
 	margin: 10px;
+
 	text-align: center;	
 }
 
 #submitDate1 {
-<<<<<<< HEAD
 	width: 300px;
 	margin: 10px;
 	text-align: center;
 	margin-left: auto;
 	margin-right: auto;
 	width: 70%;
-=======
 	float: right;
 	width: 300px;
 	marding: 10px;
 	text-align: center;
->>>>>>> 3ed3b5eba7f6c6b4679235c2e8ccb7c108e1297d
 }
 
 #projectSelect {
@@ -197,9 +196,9 @@ ul, ol {
 
 #behaviors {
 	text-align: center;
-	font-size: 17px;
-	position: fixed;
-        top: 150px;
-        right:320px;
+	font-size: 14px;
+	position: relative;
+        top: 40px;
+	margin: 0px;
 
 }

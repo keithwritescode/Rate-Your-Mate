@@ -27,10 +27,8 @@ $prjID = $_SESSION['prjID'];
 		<div id="menu">
 			<?php include ("../includes/student_menu.php"); ?>
 		</div>		
-
-		<div id="content">
-		<div id="border1">
-			<?php
+		
+		<?php
 			// Get the id of a group
 			$groupIDQuery = mysql_query( " SELECT G.GrpID FROM Groups G WHERE
                                 G.PrjID = ".$prjID);
@@ -41,17 +39,17 @@ $prjID = $_SESSION['prjID'];
 			$groupQuery = mysql_query ( " SELECT * FROM Behaviors WHERE
                               GrpID = " . $groupID . ";" );
 			$numResults = mysql_num_rows( $groupQuery );
-			
+
 			// Get all other contract info
 			$contractInfoQuery = mysql_query (" SELECT * FROM ContractInfo WHERE 
 				GrpID = " . $groupID . ";" );
 			$contractInfo = mysql_fetch_array ( $contractInfoQuery );
-			?>
+		?>
+
+
+		<div id="content">
 		
-			<form id="contractsetup" name="contractsetup" action="submitcontract.php" method="post">
-				<p> Group Goals </p>
-				<textarea wrap="virutal" name="groupGoals" rows="5" cols="50"> <?php echo $contractInfo['Goals']; ?> </textarea>
-		</div>		
+				<div id="behaviors" class='behaviors'>
 				<p> How many behaviors will the contract contain? </p>
 				<input type="number" id="groupText" name="numBehaviors" value="<?php
 					if ($numResults > 0)
@@ -60,7 +58,6 @@ $prjID = $_SESSION['prjID'];
 						echo 1; ?>" 
 					size="4" min="1" max="6"/>
 		
-				<div id='behaviors' class='behaviors'>
 					<?php
 					// Write in all behaviors
 					$i=1;
@@ -79,6 +76,13 @@ $prjID = $_SESSION['prjID'];
 					?>
 				</div>
 				<br />
+
+		<div id="border1">		
+			<form id="contractsetup" name="contractsetup" action="submitcontract.php" method="post">
+				<p> Group Goals </p>
+				<textarea wrap="virutal" name="groupGoals" rows="5" cols="50"> <?php echo $contractInfo['Goals']; ?> </textarea>
+		</div>		
+
 		<div id="border1">
 				<p>Additional Comments<p/>
 				<textarea wrap="virutal" name="additional" rows="5" cols="50"> <?php echo $contractInfo['Comments']; ?> </textarea>
