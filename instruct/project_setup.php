@@ -23,10 +23,7 @@ error_reporting(-1);
    <div id="content">
       <form id="instructor_setup" name="instructorsetup" 
             action="updateInstruct.php" method="post"  >
-        <div id="border"> 
-	 Project I.D.: <input type="text" name="projectID" />    <br />
-         Number of Groups: 
-              
+        
         <div id="rosterSource" class="dropping" >
 			<h3> Roster </h3>
             <ul name="roster" id="rosterList" class="dragging dropping">
@@ -36,7 +33,12 @@ error_reporting(-1);
 				?>
             </ul>
         </div>
-			
+		
+	<div id="border">
+	 Project I.D.: <input type="text" name="projectID" /> 
+	<BR/>
+	 Number of Groups:
+	
 		<input type="number" id="groupText" name="numGroups" value="2" min="1" max="25"/>
 		
 		<div id="groups" class="groups" >			
