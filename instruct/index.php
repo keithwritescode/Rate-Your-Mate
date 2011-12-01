@@ -1,7 +1,6 @@
 <?php include ("../includes/check_authorization.php");
 error_reporting(-1);
 
-
 include ( "../includes/config.php" );
 include ( "../includes/opendb.php" );
 
@@ -9,20 +8,6 @@ if ( !empty( $_POST['classSelect'] ) )
 	$_SESSION['crsID'] = $_POST['classSelect'];
 if ( !empty( $_POST['projectSelect'] ) ) 
 	$_SESSION['prjID'] = $_POST['projectSelect'];
-
-// For now hardwire in the roster
-$_SESSION['roster'] = array(
-    array("screenname" => "kmreynolds1", "name" => "Kris Reynolds", "id" => 1),
-    array("screenname" => "bpbielicki", "name" => "Ben Bielicki", "id" => 2),
-    array("screenname" => "mdecota", "name" => "Michael Decota", "id" => 3),
-    array("screenname" => "jdennett", "name" => "Jason Dennett", "id" => 4),
-    array("screenname" => "tferm", "name" => "Tyler Ferm", "id" => 5),
-    array("screenname" => "khallock", "name" => "Keith Hallock", "id" => 6),
-    array("screenname" => "rameden", "name" => "Ryley Ameden", "id" => 7),
-    array("screenname" => "cbecker", "name" => "Chris Becker", "id" => 8),
-    array("screenname" => "jcormier", "name" => "Joe Cormier", "id" => 9),
-    array("screenname" => "cstoner", "name" => "Cara Stoner", "id" => 10)
-);
 
 // Get the roster for the class selected and store it into roster of session
 if ( empty( $_SESSION['crsID'] ) )
@@ -45,6 +30,20 @@ if ( !empty( $_SESSION['crsID'] ) ) {
 	}
 	if ( empty ( $_SESSION['prjID'] ) )
 		$_SESSION['prjID'] = $project[0]['prjID'];
+		
+// For now hardwire in the roster
+$_SESSION['roster'] = array(
+    array("screenname" => "kmreynolds1", "name" => "Kris Reynolds", "id" => 1),
+    array("screenname" => "bpbielicki", "name" => "Ben Bielicki", "id" => 2),
+    array("screenname" => "mdecota", "name" => "Michael Decota", "id" => 3),
+    array("screenname" => "jdennett", "name" => "Jason Dennett", "id" => 4),
+    array("screenname" => "tferm", "name" => "Tyler Ferm", "id" => 5),
+    array("screenname" => "khallock", "name" => "Keith Hallock", "id" => 6),
+    array("screenname" => "rameden", "name" => "Ryley Ameden", "id" => 7),
+    array("screenname" => "cbecker", "name" => "Chris Becker", "id" => 8),
+    array("screenname" => "jcormier", "name" => "Joe Cormier", "id" => 9),
+    array("screenname" => "cstoner", "name" => "Cara Stoner", "id" => 10)
+);
 }
 ?>
 <html>
@@ -95,12 +94,10 @@ if ( !empty( $_SESSION['crsID'] ) ) {
 				echo '<p> Select a project or create a new one to begin </p>';
 			}
 			?>
-
 			<select id='projectSelect' name='projectSelect'
 				<?php if (empty($_SESSION['crsID'])) echo 'disabled="disabled"'?> onchange='this.form.submit()'>
 				<?php // Compile a list of all projects for this class
 				foreach ( $project as $prj ) {
-					print_r ($prj);
 					if ( $prj['prjID'] == $_SESSION['prjID'] )
 						$defaultString = 'selected="selected"';
 					else $defaultString = '';
@@ -109,8 +106,7 @@ if ( !empty( $_SESSION['crsID'] ) ) {
 				if ( empty ( $_SESSION['prjID'] ) )
 					echo '<option selected="selected"> Select a project </option>';
 				?>
-			</select>
-				
+			</select>				
 			</form>
                         <input id='submit' type="submit" style="visibility:hidden" />
 

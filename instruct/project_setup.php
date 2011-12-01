@@ -29,11 +29,12 @@ error_reporting(-1);
               
         <div id="rosterSource" class="dropping" >
 			<h3> Roster </h3>
-            <ul name="roster" id="rosterList" class="dragging dropping">
-				<?php
-				foreach( $_SESSION['roster'] as &$student) 
-					echo '<li id="'.$student['id'].'">'.$student['name'].'</li>';    
-				?>
+            <ul name="roster" id="rosterList" class="dragging dropping group">
+		<?php $cnt = 0;
+		foreach( $_SESSION['roster'] as &$student) 
+			echo '<li id="'.$student['id'].'">'.$student['name'].
+			'<input type=hidden name="roster['. $cnt++ .'] value="1" </input> </li>';    
+		?>
             </ul>
         </div>
 			
@@ -123,13 +124,18 @@ error_reporting(-1);
 		$( ".due" ).datepicker({ minDate: 0, maxDate: "+9M"});
 		makeDrop( "#groups-1" );
 		makeDrop( "#groups-2" );
+		makeDrop( "#rosterSource" );
+
+	        // Make all student names draggable
+        	$( "#rosterList.dragging li" ).draggable({
+                	appendTo: "body",
+	                helper: "clone"
+        	});
+
 	});
 	
-	// Make all student names draggable
-	 $(".dragging li").draggable({
-		appendTo: "body",
-		helper: "clone"
-	});
+	//
+
 </script>
 </html>
 

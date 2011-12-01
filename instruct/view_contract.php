@@ -31,7 +31,7 @@ if ( !empty( $_POST['groupID'] ) )
 		</div>	
 
 		<div id="menu">
-			<?php include ("../includes/student_menu.php"); ?>
+			<?php include ("../includes/instruct_menu.php"); ?>
 		</div>		
 
 		<div id="content">

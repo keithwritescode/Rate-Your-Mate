@@ -1,5 +1,5 @@
 $(document).ready(function() {
-
+	
 	$('#groupText').keyup(function() {
 		var num = new Number( $('#groupText').attr('value') );
 		var max = new Number( $( '#groupText' ).attr( 'max' ) );
@@ -8,7 +8,6 @@ $(document).ready(function() {
 			$( '#groupText' ).attr( 'value', max )	
 		}
 		$( '#groupText' ).click();
-		
 	});
 
 
@@ -18,10 +17,9 @@ $(document).ready(function() {
         newNum = Math.round(newNum);    // If a non-whole number was entered, round
  
 	// If adding to the form
-        if ( num < newNum ) {
-			
-            // If the new number is greater, add form elements
-            for ( var i = num + 1; i <= newNum; i++ ) {   
+        if ( num < newNum ) {	
+            	// If the new number is greater, add form elements
+		for ( var i = num + 1; i <= newNum; i++ ) {   
 			var insertHtml = '<h3><a href="#"> Group ' + i + '</a> </h3>' +
 							 '<div id="groups-' + i + '" class="group">' +
 								'<ul id="g' + i + '" class="dragging dropping">' + 
@@ -33,15 +31,22 @@ $(document).ready(function() {
 			$('.groups').append(insertHtml);
 			// Make the new table droppable
 			makeDrop('#groups-'+i);
-			// Recreate the accordion with the new group
+			// Make the new table draggable
+
+                	// Make all student names draggable
+                        $( '#groups-' + i + '.dragging li' ).draggable({
+                        	appendTo: "body",
+                                helper: "clone"
+                        });
+                                                                                                 
 			
-			}
-			$('#groups').accordion('destroy').accordion(); 
+		}
+		// Recreate the accordion with the new groups
+		$('#groups').accordion('destroy').accordion(); 
         }
-		else if ( num > newNum ) {
-						
+		else if ( num > newNum ) {			
 			for ( var i = num; i > newNum; i-- ) {
-				// add the stuff from the old list to the roster
+				// add the stuff from the deleted list to the roster
 				$('#g' + i + ' li' ).appendTo('#rosterList');
 				$('#groups-' + i).remove();
 				$('#groups h3:last-child').remove();
@@ -83,7 +88,6 @@ $(document).ready(function() {
 
 	                $( ".avail" ).datepicker({ minDate: 0, maxDate: "+9M"});
         	        $( ".due" ).datepicker({ minDate: 0, maxDate: "+9M"});
-
 		}
 	}
 	else if ( num > newNum ) {
@@ -111,7 +115,7 @@ $(id + " ul").droppable({
 			element.parentNode.removeChild(element);	
 		// Add it in			
 		$('<li id="' + ui.draggable.attr('id') +
-			'" class="ui-draggable">' + ui.draggable.html()+"</li>" + 
+			'" class="ui-draggable">' + ui.draggable.html() + 
                         '<input type="hidden" name="groups[' + this.id + '][' +
                         elem.children().length + ']" value="' +
                         ui.draggable.attr('id') + '" />' +
@@ -121,7 +125,6 @@ $(id + " ul").droppable({
 			appendTo: "body",
 			helper: "clone"
 		});
-
 		// If any ul is empty, put a place holder in it
 		$("ul", "#rosterSource").each(
 			function() {
