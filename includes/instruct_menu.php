@@ -10,7 +10,7 @@ include ( "../includes/opendb.php" );
     <li> <a href="index.php"> Home </a> </li>
 	<?php if ( !empty ( $_SESSION['crsID'] ) ) { 
 	    echo '<li> <a href="project_setup.php"> Create new project </a> </li>';
-    }  
+    	}  
 	if ( !empty( $_SESSION['prjID'] ) ) {
 		$creatorQuery = mysql_query( 'SELECT P.ContractCreator FROM Project P WHERE P.PrjID = ' . $_SESSION['prjID'] . ';' );
 		$creator = mysql_fetch_array( $creatorQuery );

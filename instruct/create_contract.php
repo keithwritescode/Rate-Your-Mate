@@ -11,12 +11,11 @@ $creator = $creator[0];
 if ( $creator != 1 ) {
 	echo '<META HTTP-EQUIV="Refresh" Content="0; URL=index.php">';	
 	exit;
-
+}
 $prjNameQuery = mysql_query ('SELECT P.PrjName FROM Project P WHERE P.PrjID = ' . $prjID . ';' );
 $prjName = mysql_fetch_array( $prjNameQuery );
 $prjName = $prjName['PrjName'];
 
-}
 ?>
 <html>
 	<head>
@@ -35,7 +34,7 @@ $prjName = $prjName['PrjName'];
 		</div>	
 
 		<div id="menu">
-			<?php include ("../includes/student_menu.php"); ?>
+			<?php include ("../includes/instruct_menu.php"); ?>
 		</div>		
 
 		<div id="content">
@@ -46,11 +45,11 @@ $prjName = $prjName['PrjName'];
                                 G.PrjID = " . $prjID . ";");
 			$groupID = mysql_fetch_array ( $groupIDQuery );
 			$groupID = $groupID['GrpID'];
-			echo $groupID;
+
 			// Get all behaviors for the group
 			$groupQuery = mysql_query ( "SELECT * FROM Behaviors WHERE
                               GrpID = " . $groupID . ";" );
-			$numResults = mysql_num_rows( $groupQuery );
+			$numResults = mysql_num_rows( $groupQuery );			
 			
 			// Get all other contract info
 			$contractInfoQuery = mysql_query ( "SELECT * FROM ContractInfo WHERE 
@@ -77,6 +76,7 @@ $prjName = $prjName['PrjName'];
 				$i=1;
 				if ( $numResults > 0 ) {
 					while ( $row = mysql_fetch_array($groupQuery) ) {
+						//print_r ( $row );
 						echo '<h4> Behavior ' . $i . ' </h4>';
 						echo '<textarea class="behaviorText" name="behavior['.$i++.']" rows="2" cols="20">'.
 							$row['Description'] . '</textarea>';								}
