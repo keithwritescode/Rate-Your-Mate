@@ -36,10 +36,8 @@ $prjName = $prjName['PrjName'];
 		<div id="menu">
 			<?php include ("../includes/instruct_menu.php"); ?>
 		</div>		
-
-		<div id="content">
-		<div id="border1">
-			<?php
+		
+		<?php
 			// Get the id of a group
 			$groupIDQuery = mysql_query( "SELECT G.GrpID FROM Groups G WHERE
                                 G.PrjID = " . $prjID . ";");
@@ -49,12 +47,18 @@ $prjName = $prjName['PrjName'];
 			// Get all behaviors for the group
 			$groupQuery = mysql_query ( "SELECT * FROM Behaviors WHERE
                               GrpID = " . $groupID . ";" );
+
 			$numResults = mysql_num_rows( $groupQuery );			
 			
+
+			$numResults = mysql_num_rows( $groupQuery );
+
+
 			// Get all other contract info
 			$contractInfoQuery = mysql_query ( "SELECT * FROM ContractInfo WHERE 
 				GrpID = " . $groupID . ";" );
 			$contractInfo = mysql_fetch_array ( $contractInfoQuery );
+
 			?>
 		</div>
 
@@ -90,6 +94,44 @@ $prjName = $prjName['PrjName'];
 			</div>
 					
 			<div id="border1">
+
+		<div id="content">
+		
+				<div id="behaviors" class='behaviors'>
+				<p> How many behaviors will the contract contain? </p>
+				<input type="number" id="groupText" name="numBehaviors" value="<?php
+					if ($numResults > 0)
+						echo $numResults;
+					else
+						echo 1; ?>" 
+					size="4" min="1" max="6"/>
+		
+					<?php
+					// Write in all behaviors
+					$i=1;
+					if ( $numResults > 0 ) {
+						while ( $row = mysql_fetch_array($groupQuery) ) {
+							echo '<h4> Behavior ' . $i . ' </h4>';
+							echo '<textarea class="behaviorText" name="behavior['.$i++.']" rows="2" cols="20">'.
+								$row['Description'] . '</textarea>';								}
+					}
+					// If there arent any previous fields provide one empty one
+					else {
+						echo '<h4> Behavior 1 </h4>';
+						echo '<textarea class="behaviorText" name="behavior[0]" rows="2" cols="20"></textarea>';
+					}
+	
+					?>
+				</div>
+				<br />
+
+		<div id="border1">		
+			<form id="contractsetup" name="contractsetup" action="submitcontract.php" method="post">
+				<p> Group Goals </p>
+				<textarea wrap="virutal" name="groupGoals" rows="5" cols="50"> <?php echo $contractInfo['Goals']; ?> </textarea>
+		</div>		
+
+		<div id="border1">
 				<p>Additional Comments<p/>
 				<textarea wrap="virutal" name="additional" rows="5" cols="50"> <?php echo $contractInfo['Comments']; ?> </textarea>
 				<br />

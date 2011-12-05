@@ -16,7 +16,7 @@ else {
 }
 
 $_SESSION['username'] = $username;
-$_SESSION['userType'] = 'faculty';
+$_SESSION['userType'] = 'student';
 
 ?>
 
