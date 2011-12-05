@@ -40,7 +40,7 @@ $behaviorQuery = mysql_query ( "SELECT B.Description
 </div>
 
 <div id="menu">
-	<?php include ("../includes/menu.php"); ?>
+	<?php include ("../includes/student_menu.php"); ?>
 </div>
 
 <div id="content">
