@@ -26,7 +26,7 @@ error_reporting(-1);
         
         <div id="rosterSource" class="dropping" >
 			<h3> Roster </h3>
-            <ul name="roster" id="rosterList" class="dragging dropping group">
+            <ul name="roster" id="rosterList" class="dragging dropping">
 		<?php $cnt = 0;
 		foreach( $_SESSION['roster'] as &$student) 
 			echo '<li id="'.$student['id'].'">'.$student['name'].

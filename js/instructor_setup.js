@@ -15,34 +15,30 @@ $(document).ready(function() {
         var num = $( '.group' ).length;
         var newNum = new Number( $('#groupText').attr('value') );
         newNum = Math.round(newNum);    // If a non-whole number was entered, round
- 
+		//alert ('num boxes ' + num + ' newNum ' + newNum );
 	// If adding to the form
         if ( num < newNum ) {	
-            	// If the new number is greater, add form elements
-		for ( var i = num + 1; i <= newNum; i++ ) {   
-			var insertHtml = '<h3><a href="#"> Group ' + i + '</a> </h3>' +
-							 '<div id="groups-' + i + '" class="group">' +
-								'<ul id="g' + i + '" class="dragging dropping">' + 
-									'<li class="placeholder"> Drag names here </li>' +
-								'</ul>'+
-							 '</div>';
+			// If the new number is greater, add form elements
+			for ( var i = num + 1; i <= newNum; i++ ) {   
+				var insertHtml = '<h3><a href="#"> Group ' + i + '</a> </h3>' +
+					'<div id="groups-' + i + '" class="group">' +
+					'<ul id="g' + i + '" class="dragging dropping">' + 
+					'<li class="placeholder"> Drag names here </li>' +
+					'</ul></div>';
 
-			// Add the new tab
-			$('.groups').append(insertHtml);
-			// Make the new table droppable
-			makeDrop('#groups-'+i);
-			// Make the new table draggable
+				// Add the new tab
+				$('.groups').append(insertHtml);
+				// Make the new table droppable
+				makeDrop('#groups-'+i);
 
-                	// Make all student names draggable
-                        $( '#groups-' + i + '.dragging li' ).draggable({
-                        	appendTo: "body",
-                                helper: "clone"
-                        });
-                                                                                                 
-			
-		}
-		// Recreate the accordion with the new groups
-		$('#groups').accordion('destroy').accordion(); 
+				// Make all student names draggable
+				$( '#groups-' + i + '.dragging li' ).draggable({
+					appendTo: "body",
+					helper: "clone"
+				});																	 
+			}
+			// Recreate the accordion with the new groups
+			$('#groups').accordion('destroy').accordion(); 
         }
 		else if ( num > newNum ) {			
 			for ( var i = num; i > newNum; i-- ) {
@@ -74,16 +70,16 @@ $(document).ready(function() {
 	if ( num < newNum ) {
 		for ( var i = num + 1; i <= newNum; i++ ) {
 			var insertHtml = '<div class="submitDate">' +
-                        			'<h4> Evaluation ' + i + '</h4>' +
-                        			'Evaluatior: <br /> Available From' +
-                        			'<input class="avail" />' +
-                        			'Due Date' +
-                        			'<input class="due" />' +
-                        			'<br /> Evaluatee: <br />Available From' +
-                        			'<input class="avail" />' +
-                        			'Due Date' +
-                        			'<input class="due" />'
-                				'</div>';
+                '<h4> Evaluation ' + i + '</h4>' +
+                'Evaluatior: <br /> Available From' +
+                '<input class="avail" />' +
+                'Due Date' +
+                '<input class="due" />' +
+                '<br /> Evaluatee: <br />Available From' +
+                '<input class="avail" />' +
+                'Due Date' +
+                '<input class="due" />'
+                '</div>';
 			$( '#submitDate' ).append( insertHtml );
 
 	                $( ".avail" ).datepicker({ minDate: 0, maxDate: "+9M"});

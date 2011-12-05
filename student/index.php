@@ -1,12 +1,9 @@
 <html>
 <head>
     <title> Instructor Home </title>
-    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jq
-uery-ui.css" rel="stylesheet" type="text/css"/>
-    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.j
-s'></script>
-    <script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui
-.min.js'></script>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js'></script>
     <link rel="stylesheet" type="text/css" href="../css/dateStyle.css" />
     <link rel="stylesheet" type="text/css" href="../css/style.css" />
 </head>
