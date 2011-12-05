@@ -11,7 +11,7 @@ $prjID = 72;
 	<head>
 		<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js'></script>
 		<script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js'></script>
-
+		
 		<title>Rate Your Mate</title>
 
 	</head>
