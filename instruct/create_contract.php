@@ -5,6 +5,16 @@ include ("../includes/config.php");
 include ("../includes/opendb.php");
 
 $prjID = $_SESSION['prjID'];
+$creatorQuery = mysql_query( 'SELECT P.ContractCreator FROM Project P WHERE P.PrjID = ' . $prjID . ';' );
+$creator = mysql_fetch_array( $creatorQuery );
+$creator = $creator[0];
+if ( $creator != 1 ) {
+	echo '<META HTTP-EQUIV="Refresh" Content="0; URL=index.php">';	
+	exit;
+}
+$prjNameQuery = mysql_query ('SELECT P.PrjName FROM Project P WHERE P.PrjID = ' . $prjID . ';' );
+$prjName = mysql_fetch_array( $prjNameQuery );
+$prjName = $prjName['PrjName'];
 
 ?>
 <html>
@@ -16,36 +26,74 @@ $prjID = $_SESSION['prjID'];
     		<link rel="stylesheet" type="text/css" href="../css/style.css" />
 
 		<title>Rate Your Mate</title>
-
 	</head>
 
 	<body>
 		<div id="header">
-			<h1>Create Contract for <?php echo $prjID; ?></h1>
+			<h1>Create Contract for <?php echo $prjName; ?></h1>
 		</div>	
 
 		<div id="menu">
-			<?php include ("../includes/student_menu.php"); ?>
+			<?php include ("../includes/instruct_menu.php"); ?>
 		</div>		
 		
 		<?php
 			// Get the id of a group
-			$groupIDQuery = mysql_query( " SELECT G.GrpID FROM Groups G WHERE
-                                G.PrjID = ".$prjID);
+			$groupIDQuery = mysql_query( "SELECT G.GrpID FROM Groups G WHERE
+                                G.PrjID = " . $prjID . ";");
 			$groupID = mysql_fetch_array ( $groupIDQuery );
 			$groupID = $groupID['GrpID'];
-			
+
 			// Get all behaviors for the group
-			$groupQuery = mysql_query ( " SELECT * FROM Behaviors WHERE
+			$groupQuery = mysql_query ( "SELECT * FROM Behaviors WHERE
                               GrpID = " . $groupID . ";" );
+
+			$numResults = mysql_num_rows( $groupQuery );			
+			
+
 			$numResults = mysql_num_rows( $groupQuery );
 
+
 			// Get all other contract info
-			$contractInfoQuery = mysql_query (" SELECT * FROM ContractInfo WHERE 
+			$contractInfoQuery = mysql_query ( "SELECT * FROM ContractInfo WHERE 
 				GrpID = " . $groupID . ";" );
 			$contractInfo = mysql_fetch_array ( $contractInfoQuery );
-		?>
 
+			?>
+		</div>
+
+		<form id="contractsetup" name="contractsetup" action="submitcontract.php" method="post">
+			<p> Group Goals </p>
+			<textarea wrap="virutal" name="groupGoals" rows="5" cols="50"> <?php echo $contractInfo['Goals']; ?> </textarea>		
+		
+			<p> How many behaviors will the contract contain? </p>
+			<input type="number" id="groupText" name="numBehaviors" value="<?php
+			if ($numResults > 0)
+				echo $numResults;
+			else
+				echo 1; ?>" 
+				size="4" min="1" max="6"/>
+			
+			<div id='behaviors' class='behaviors'>
+				<?php
+				// Write in all behaviors
+				$i=1;
+				if ( $numResults > 0 ) {
+					while ( $row = mysql_fetch_array($groupQuery) ) {
+						//print_r ( $row );
+						echo '<h4> Behavior ' . $i . ' </h4>';
+						echo '<textarea class="behaviorText" name="behavior['.$i++.']" rows="2" cols="20">'.
+							$row['Description'] . '</textarea>';								}
+					}
+				// If there arent any previous fields provide one empty one
+				else {
+					echo '<h4> Behavior 1 </h4>';
+					echo '<textarea class="behaviorText" name="behavior[0]" rows="2" cols="20"></textarea>';
+				}
+				?>
+			</div>
+					
+			<div id="border1">
 
 		<div id="content">
 		
@@ -88,9 +136,9 @@ $prjID = $_SESSION['prjID'];
 				<textarea wrap="virutal" name="additional" rows="5" cols="50"> <?php echo $contractInfo['Comments']; ?> </textarea>
 				<br />
 				<input type="hidden" name="prjID" value="<?php echo $prjID ?>" />
-		</div>
-				<input type="submit" value='Accept'/>
-			</form>
+			</div>
+			<input type="submit" value='Accept'/>
+		</form>
 		</div>
 	</body>
 
@@ -104,8 +152,7 @@ $(document).ready(function () {
 		if ( num > max ){ 
 			$( '#groupText' ).attr( 'value', max );	
 		}
-		$( '#groupText' ).click();
-		
+		$( '#groupText' ).click();		
 	});
 	$('#groupText').click(function() {
 		var num = $( '.behaviorText' ).length;
