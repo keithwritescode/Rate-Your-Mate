@@ -10,6 +10,7 @@ $cnt = 0;
 while ( $row = mysql_fetch_array( $groupIDQuery ) ) {
 	$groupArr[$cnt++] = $row['GrpID'];
 }
+print_r($groupArr);
 
 // Get all behaviors for the group
 $groupQueryString = ( " SELECT B.* FROM Behaviors B WHERE
@@ -22,15 +23,15 @@ if ( $numResults == 0 ) {
 	// Do for each group
 	foreach ( $groupArr as $groupID ) {
 		mysql_query ( "INSERT INTO ContractInfo ( GrpID, Goals, Comments, numBehaviors)
-			VALUES ( ".$groupID.", '".$_POST['groupGoals']."', '".$_POST['additional'].
+			VALUES ( ".$groupID.", '".trim($_POST['groupGoals'])."', '".trim($_POST['additional']).
 			"', ".$_POST['numBehaviors']. ");" );
 	}
 }
 // Else just update the current table
 else {
 	foreach ( $groupArr as $groupID ) {
-		mysql_query  ( "UPDATE ContractInfo SET Goals='".$_POST['groupGoals']."', Comments='".
-			$_POST['additional']."', numBehaviors='".$_POST['numBehaviors']."' 
+		mysql_query  ( "UPDATE ContractInfo SET Goals='".trim($_POST['groupGoals'])."', Comments='".
+			trim($_POST['additional'])."', numBehaviors='".$_POST['numBehaviors']."' 
 			WHERE GrpID=".$groupID.";" );
 	}
 }
@@ -40,7 +41,7 @@ foreach ( $groupArr as $groupID ) {
 	mysql_query ( "DELETE FROM Behaviors WHERE GrpID=".$groupID.";" );
 	foreach ( $_POST['behavior'] as $behavior ) {
 		mysql_query ( "INSERT INTO Behaviors (GrpID, Description)
-			VALUES (".$groupID.", '".$behavior."');" );
+			VALUES (".$groupID.", '".trim($behavior)."');" );
 	}
 }
 ?>
@@ -65,7 +66,7 @@ foreach ( $groupArr as $groupID ) {
 <script type="text/javascript">
         $(document).ready(function() {
                 $(function() {
-                        $( "#submit" ).click();
+                        //$( "#submit" ).click();
                 });
         });
 </script>

@@ -117,7 +117,7 @@ ul, ol {
 	border: 5px solid gray;
 }
 
-#border1 {
+#border1, #behaviors {
 	height: 0px auto;
 	width: 420px;
 	padding: 10px;
