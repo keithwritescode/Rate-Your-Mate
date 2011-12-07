@@ -4,63 +4,77 @@ error_reporting(-1);
 include ("../includes/config.php");
 include ("../includes/opendb.php");
 
-$studentID = 4;
-$prjID = 72;
+$prjID = $_SESSION['prjID'];
+$creatorQuery = mysql_query( 'SELECT P.ContractCreator FROM Project P WHERE P.PrjID = ' . $prjID . ';' );
+$creator = mysql_fetch_array( $creatorQuery );
+$creator = $creator[0];
+if ( $creator != 0 ) {
+	echo '<META HTTP-EQUIV="Refresh" Content="0; URL=index.php">';	
+	exit;
+}
+$prjNameQuery = mysql_query ('SELECT P.PrjName FROM Project P WHERE P.PrjID = ' . $prjID . ';' );
+$prjName = mysql_fetch_array( $prjNameQuery );
+$prjName = $prjName['PrjName'];
+$groupID = $_SESSION['groupID'];
+
 ?>
 <html>
 	<head>
 		<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js'></script>
 		<script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js'></script>
 		
-		<title>Rate Your Mate</title>
+		<link rel="stylesheet" type="text/css" href="../css/dateStyle.css" />
+    	<link rel="stylesheet" type="text/css" href="../css/style.css" />
 
+		<title>Rate Your Mate</title>
 	</head>
 
 	<body>
 		<div id="header">
-			<h2>Create Contract</h2>
+			<h1>Create Contract for <?php echo $prjName; ?></h1>
 		</div>	
 
 		<div id="menu">
 			<?php include ("../includes/student_menu.php"); ?>
 		</div>		
+		
+		<?php
+		// Get all behaviors for the group
+		$groupQuery = mysql_query ( "SELECT * FROM Behaviors WHERE
+						  GrpID = " . $groupID . ";" );
+		$numResults = mysql_num_rows( $groupQuery );
+
+		// Get all other contract info
+		$contractInfoQuery = mysql_query ( "SELECT * FROM ContractInfo WHERE 
+			GrpID = " . $groupID . ";" );
+		$contractInfo = mysql_fetch_array ( $contractInfoQuery );
+		?>
+
+
 
 		<div id="content">
-			<?php
-			// Get the Group ID
-			$groupIDQuery = mysql_query ( " SELECT G.GrpID FROM Groups G WHERE
-                                G.PrjID = ".$prjID." AND
-                                G.StudentID = ".$studentID.";" );
-			$groupID = mysql_fetch_array ( $groupIDQuery );
-			$groupID = $groupID['GrpID'];
-			// Get all behaviors for the group
-			$groupQuery = mysql_query ( " SELECT * FROM Behaviors WHERE
-                              GrpID = " . $groupID . ";" );
-			$numResults = mysql_num_rows( $groupQuery );
-	
-			?>
 			<form id="contractsetup" name="contractsetup" action="submitcontract.php" method="post">
-				<p> Group Goals </p>
-				<textarea wrap="virutal" name="groupGoals" rows="5" cols="50"></textarea>
-				
-				<p> How many behaviors will your contract contain? </p>
-				<input type="number" id="groupText" name="numBehaviors" value="<?php
-					if ($numResults > 0)
-						echo $numResults;
-					else
-						echo 1; ?>" 
-					size="4" min="1" max="6"/>
-	
-				<div id='behaviors' class='behaviors'>
+				<div id="border1">					
+					<p> Group Goals </p>
+					<textarea wrap="virutal" name="groupGoals" rows="5" cols="50"> <?php echo trim( $contractInfo['Goals'] ); ?> </textarea>
+				</div>	
+				<div id="behaviors" class='behaviors'>
+					<p> How many behaviors will the contract contain? </p>
+					<input type="number" id="groupText" name="numBehaviors" value="<?php
+						if ($numResults > 0)
+							echo $numResults;
+						else
+							echo 1; ?>" 
+						size="4" min="1" max="6"/>
+			
 					<?php
 					// Write in all behaviors
-					$numResults = mysql_num_rows($groupQuery);
-					$i = $numResults;
+					$i=1;
 					if ( $numResults > 0 ) {
 						while ( $row = mysql_fetch_array($groupQuery) ) {
-							echo '<h4> Behavior ' . $i . ' <h4>';
+							echo '<h4> Behavior ' . $i . ' </h4>';
 							echo '<textarea class="behaviorText" name="behavior['.$i++.']" rows="2" cols="20">'.
-								$row['Description'] . '</textarea>';								}
+								trim( $row['Description'] ) . '</textarea>';								}
 					}
 					// If there arent any previous fields provide one empty one
 					else {
@@ -70,15 +84,18 @@ $prjID = 72;
 	
 					?>
 				</div>
-	
 				<br />
+
 	
-				<p>Additional Comments<p/>
-				<textarea wrap="virutal" name="additional" rows="5" cols="50"></textarea>
-				<br />
-				<input type="hidden" name="studentID" value="<?php echo $studentID; ?>" />
-				<input type="hidden" name="prjID" value="<?php echo $prjID ?>" />
-				<input type="submit" value='Accept'/>
+
+			<div id="border1">
+					<p>Additional Comments<p/>
+					<textarea wrap="virutal" name="additional" rows="5" cols="50"> <?php echo trim( $contractInfo['Comments'] ); ?> </textarea>
+					<br />
+					<input type="hidden" name="prjID" value="<?php echo $prjID; ?>" />
+					<input type="hidden" name="groupID" value="<?php echo $groupID; ?>" />
+			</div>
+			<input type="submit" value='Accept'/>
 			</form>
 		</div>
 	</body>
@@ -93,8 +110,7 @@ $(document).ready(function () {
 		if ( num > max ){ 
 			$( '#groupText' ).attr( 'value', max );	
 		}
-		$( '#groupText' ).click();
-		
+		$( '#groupText' ).click();		
 	});
 	$('#groupText').click(function() {
 		var num = $( '.behaviorText' ).length;

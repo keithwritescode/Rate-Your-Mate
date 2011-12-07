@@ -60,52 +60,24 @@ $prjName = $prjName['PrjName'];
 			$contractInfo = mysql_fetch_array ( $contractInfoQuery );
 
 			?>
-		</div>
 
-		<form id="contractsetup" name="contractsetup" action="submitcontract.php" method="post">
-			<p> Group Goals </p>
-			<textarea wrap="virutal" name="groupGoals" rows="5" cols="50"> <?php echo $contractInfo['Goals']; ?> </textarea>		
-		
-			<p> How many behaviors will the contract contain? </p>
-			<input type="number" id="groupText" name="numBehaviors" value="<?php
-			if ($numResults > 0)
-				echo $numResults;
-			else
-				echo 1; ?>" 
-				size="4" min="1" max="6"/>
-			
-			<div id='behaviors' class='behaviors'>
-				<?php
-				// Write in all behaviors
-				$i=1;
-				if ( $numResults > 0 ) {
-					while ( $row = mysql_fetch_array($groupQuery) ) {
-						//print_r ( $row );
-						echo '<h4> Behavior ' . $i . ' </h4>';
-						echo '<textarea class="behaviorText" name="behavior['.$i++.']" rows="2" cols="20">'.
-							$row['Description'] . '</textarea>';								}
-					}
-				// If there arent any previous fields provide one empty one
-				else {
-					echo '<h4> Behavior 1 </h4>';
-					echo '<textarea class="behaviorText" name="behavior[0]" rows="2" cols="20"></textarea>';
-				}
-				?>
-			</div>
-					
-			<div id="border1">
+
 
 		<div id="content">
-		
+			<form id="contractsetup" name="contractsetup" action="submitcontract.php" method="post">
+				<div id="border1">					
+					<p> Group Goals </p>
+					<textarea wrap="virutal" name="groupGoals" rows="5" cols="50"> <?php echo trim( $contractInfo['Goals'] ); ?> </textarea>
+				</div>	
 				<div id="behaviors" class='behaviors'>
-				<p> How many behaviors will the contract contain? </p>
-				<input type="number" id="groupText" name="numBehaviors" value="<?php
-					if ($numResults > 0)
-						echo $numResults;
-					else
-						echo 1; ?>" 
-					size="4" min="1" max="6"/>
-		
+					<p> How many behaviors will the contract contain? </p>
+					<input type="number" id="groupText" name="numBehaviors" value="<?php
+						if ($numResults > 0)
+							echo $numResults;
+						else
+							echo 1; ?>" 
+						size="4" min="1" max="6"/>
+			
 					<?php
 					// Write in all behaviors
 					$i=1;
@@ -113,7 +85,7 @@ $prjName = $prjName['PrjName'];
 						while ( $row = mysql_fetch_array($groupQuery) ) {
 							echo '<h4> Behavior ' . $i . ' </h4>';
 							echo '<textarea class="behaviorText" name="behavior['.$i++.']" rows="2" cols="20">'.
-								$row['Description'] . '</textarea>';								}
+								trim( $row['Description'] ) . '</textarea>';								}
 					}
 					// If there arent any previous fields provide one empty one
 					else {
@@ -125,20 +97,16 @@ $prjName = $prjName['PrjName'];
 				</div>
 				<br />
 
-		<div id="border1">		
-			<form id="contractsetup" name="contractsetup" action="submitcontract.php" method="post">
-				<p> Group Goals </p>
-				<textarea wrap="virutal" name="groupGoals" rows="5" cols="50"> <?php echo $contractInfo['Goals']; ?> </textarea>
-		</div>		
+	
 
-		<div id="border1">
-				<p>Additional Comments<p/>
-				<textarea wrap="virutal" name="additional" rows="5" cols="50"> <?php echo $contractInfo['Comments']; ?> </textarea>
-				<br />
-				<input type="hidden" name="prjID" value="<?php echo $prjID ?>" />
+			<div id="border1">
+					<p>Additional Comments<p/>
+					<textarea wrap="virutal" name="additional" rows="5" cols="50"> <?php echo trim( $contractInfo['Comments'] ); ?> </textarea>
+					<br />
+					<input type="hidden" name="prjID" value="<?php echo $prjID ?>" />
 			</div>
 			<input type="submit" value='Accept'/>
-		</form>
+			</form>
 		</div>
 	</body>
 

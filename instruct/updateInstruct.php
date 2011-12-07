@@ -59,30 +59,6 @@
 		}
 		$maxGroup++;
 	}
-	
+echo '<META HTTP-EQUIV="Refresh" Content="0; URL=index.php">';	
 ?>
-<html>
-	<head>
-		<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
-		<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js'></script>
-		<script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js'></script>
-	</head>
-	<body>
-	    <form id="instructor_setup" name="instructorsetup" 
-            action="index.php" method="post"  >
-			<input type="hidden" name="message" value="Project Creation Form successfully submitted!" />
-			<input id="submit" type="submit" value="Submit" />
 
-		</form>
-	</body>
-</html>
-<script type="text/javascript">
-	$(document).ready(function() {
-		$(function() {
-			//$('#submit').click();
-		});
-	});
-</script>
-
-
-</script>

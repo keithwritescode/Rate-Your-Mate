@@ -10,6 +10,7 @@ $cnt = 0;
 while ( $row = mysql_fetch_array( $groupIDQuery ) ) {
 	$groupArr[$cnt++] = $row['GrpID'];
 }
+print_r($groupArr);
 
 // Get all behaviors for the group
 $groupQueryString = ( " SELECT B.* FROM Behaviors B WHERE
@@ -22,15 +23,15 @@ if ( $numResults == 0 ) {
 	// Do for each group
 	foreach ( $groupArr as $groupID ) {
 		mysql_query ( "INSERT INTO ContractInfo ( GrpID, Goals, Comments, numBehaviors)
-			VALUES ( ".$groupID.", '".$_POST['groupGoals']."', '".$_POST['additional'].
+			VALUES ( ".$groupID.", '".trim($_POST['groupGoals'])."', '".trim($_POST['additional']).
 			"', ".$_POST['numBehaviors']. ");" );
 	}
 }
 // Else just update the current table
 else {
 	foreach ( $groupArr as $groupID ) {
-		mysql_query  ( "UPDATE ContractInfo SET Goals='".$_POST['groupGoals']."', Comments='".
-			$_POST['additional']."', numBehaviors='".$_POST['numBehaviors']."' 
+		mysql_query  ( "UPDATE ContractInfo SET Goals='".trim($_POST['groupGoals'])."', Comments='".
+			trim($_POST['additional'])."', numBehaviors='".$_POST['numBehaviors']."' 
 			WHERE GrpID=".$groupID.";" );
 	}
 }
@@ -40,33 +41,10 @@ foreach ( $groupArr as $groupID ) {
 	mysql_query ( "DELETE FROM Behaviors WHERE GrpID=".$groupID.";" );
 	foreach ( $_POST['behavior'] as $behavior ) {
 		mysql_query ( "INSERT INTO Behaviors (GrpID, Description)
-			VALUES (".$groupID.", '".$behavior."');" );
+			VALUES (".$groupID.", '".trim($behavior)."');" );
 	}
 }
+echo '<META HTTP-EQUIV="Refresh" Content="0; URL=index.php">';
 ?>
 
-<html>
-        <head>
-                <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
-                <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js'></script>
-                <script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js'></script>
-        </head>
-        <body>
-            <form id="instructor_setup" name="instructorsetup"
-            action="index.php" method="post"  >
-                        <input type="hidden" name="message" value=
-				<?php if ($numResults==0) echo '"Contract created successfully!"';
-					else echo '"Contract update was successful!"'; ?>/>
-                        <input id="submit" type="submit" value="Submit" />
-
-                </form>
-        </body>
-</html>
-<script type="text/javascript">
-        $(document).ready(function() {
-                $(function() {
-                        $( "#submit" ).click();
-                });
-        });
-</script>
 
