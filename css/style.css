@@ -106,7 +106,7 @@ ul, ol {
         font-size: 13px;
         font-weight: bold;
         color: #b4b4b4;
-}
+} 
 
 
 #border {
@@ -217,3 +217,7 @@ ul, ol {
 	margin 0px;
 }
 
+#table {
+	text-align: center;
+	 color: #b4b4b4;
+}
