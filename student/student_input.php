@@ -29,7 +29,7 @@ $behaviorQuery = mysql_query( 'SELECT B.BehaviorID, B.Description
 <body>
 
 <div id="header">
-	<h2>Student Input</h2>
+	<h1>Student Input</h1>
 </div>
 
 <div id="menu">
@@ -47,6 +47,35 @@ $behaviorQuery = mysql_query( 'SELECT B.BehaviorID, B.Description
 	<form action="submitStudentInput.php" method="POST"> 
 	
 		<?php
+
+		$projResult = mysql_query ("SELECT  CourseID FROM Project WHERE PrjID = ".$prjID." ;");
+
+		while($row = mysql_fetch_array($projResult))
+  {
+  $_SESSION['crsID'] = $row['CourseID'];
+  
+  }
+
+		 $result = mysql_query ("SELECT DISTINCT a.roleid as roleid, b.id as
+ id, b.firstname as firstname, b.lastname as lastname FROM mdl_role_assignments a, mdl_user b, mdl_course c
+                                              WHERE a.roleid=5 AND a.userid=b.id AND c.id = " . $_SESSION['crsID'] . ';');
+        $i = 0;
+
+	
+
+        // Put the roster into an array in the session
+        while ( $row = mysql_fetch_assoc($result) ) {
+                if ( !empty( $_SESSION['roster'] ) ) {
+                        $_SESSION['roster'] += array($i => array("name" =>($row['firstname'] . " " . $row['lastname']), "id" => $row['id']));
+                }
+                else {
+                        $_SESSION['roster'] = array( array("name" => ($row['firstname'] . " " . $row['lastname']), "id" => $row['id']));
+                }
+                $i++;
+        }
+
+
+
 		$behaviorCnt = 1;
 		// Go through each behavior
 		while ( $row = mysql_fetch_array( $behaviorQuery ) ) {
@@ -59,7 +88,7 @@ $behaviorQuery = mysql_query( 'SELECT B.BehaviorID, B.Description
 			echo '<div class="ac" >';
 			// List a box for each student in the group
 			foreach ( $_SESSION['groupList'] as $student ) {
-				echo '<h3> <a href="#"> Student Name goes here ' . $studentCnt . '</a></h3>';
+// LINE TO PRINT STUDENT NAMES TO BOXES				echo '<h3> <a href="#"> '  . $roster['name'] . '</a></h3>';
 				echo '<div><textarea name=student['.$student['studentID'].']['.$behaviorCnt.']
 					rows="5" cols="50">Student ID '.$student['studentID'].'</textarea></div>';
 			}
