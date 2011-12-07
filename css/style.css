@@ -127,7 +127,7 @@ ul, ol {
 
 #border2 {
 	height: 0px auto;
-	width: 420px;
+	width: 0px auto;
 	padding: 10px;
 	margin: 10px;
 	border: 5px solid gray;
@@ -155,9 +155,11 @@ ul, ol {
 	text-align: left;	
 }
 
-#groups-2 {
-	width: 0px auto;
+#groups-2{
+	widht: 0px auto;
+	height: 10px;
 }
+
 
 #contractSubmission {
 	margin: 15px;		
