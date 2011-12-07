@@ -19,7 +19,7 @@ $numResults = mysql_num_rows( $groupQuery );
 
 // Get all other contract info
 $contractInfoQuery = mysql_query ('SELECT * FROM ContractInfo WHERE 
-	GrpID = ' . $_SESSION['GrpID'] . ';' );
+	GrpID = ' . $_SESSION['groupID'] . ';' );
 $contractInfo = mysql_fetch_array ( $contractInfoQuery );
 ?>
 <html>

@@ -5,6 +5,7 @@ error_reporting(-1);
 include ( "../includes/config.php" );
 include ( "../includes/opendb.php" );
 $userID = 8;
+$_SESSION['userID'] = $userID;
 
 // If the project was changed load the new team list into the session
 if ( !empty( $_POST['projectSelect'] ) && $_POST['projectSelect'] != $_SESSION['prjID'] ) {

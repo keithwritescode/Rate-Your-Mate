@@ -10,18 +10,10 @@ $studentID = 4;
 // Brought in through POST
 $prjID = $_SESSION['prjID'];
 
-// Get student list for the project
-$groupQueryString = ("SELECT G.StudentID
-	       FROM Groups G
-	       WHERE G.GrpID = ( SELECT G1.GrpID
-	         	FROM Groups G1 WHERE StudentID ='$studentID')
-		   AND G.StudentID !='$studentID' AND G.PrjID = '$prjID';" );
-
 // Get the behavior list
-$behaviorQuery = mysql_query ( "SELECT B.Description
+$behaviorQuery = mysql_query( 'SELECT B.BehaviorID, B.Description
 				FROM Behaviors B
-				WHERE B.GrpID = ( SELECT G.GrpID FROM
-					Groups G WHERE G.StudentID = '$studentID');") or die(mysql_error());	
+				WHERE B.GrpID = ' . $_SESSION['groupID'] . ';');	
 
 ?>
 
@@ -31,7 +23,8 @@ $behaviorQuery = mysql_query ( "SELECT B.Description
 	<title>Rate Your Mate</title>
 	<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
 	<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js'></script>
-    	<script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js'></script>
+	<link rel="stylesheet" type="text/css" href="../css/style.css" />
 </head>
 <body>
 
@@ -56,40 +49,35 @@ $behaviorQuery = mysql_query ( "SELECT B.Description
 		<?php
 		$behaviorCnt = 1;
 		// Go through each behavior
-		while ( $brow = mysql_fetch_array( $behaviorQuery ) ) {
+		while ( $row = mysql_fetch_array( $behaviorQuery ) ) {
 			// Put in the header
 			echo '<div class="behavior">';
 			echo '<h3> Behavior ' . $behaviorCnt . '</h3>';
-			echo '<p> ' . $brow['Description'] . '</p>';
+			echo '<p> ' . $row['Description'] . '</p>';
 			$studentCnt = 1;
-			$groupQuery = mysql_query ( $groupQueryString );
+
 			echo '<div class="ac" >';
 			// List a box for each student in the group
-			while ( $srow = mysql_fetch_array( $groupQuery ) ) {
+			foreach ( $_SESSION['groupList'] as $student ) {
 				echo '<h3> <a href="#"> Student Name goes here ' . $studentCnt . '</a></h3>';
-				echo '<div><textarea name=student['.$srow['StudentID'].']['.$behaviorCnt.']
-					rows="5" cols="50">Student ID '.$srow['StudentID'].'</textarea></div>';
-				$studentCnt++;
+				echo '<div><textarea name=student['.$student['studentID'].']['.$behaviorCnt.']
+					rows="5" cols="50">Student ID '.$student['studentID'].'</textarea></div>';
 			}
 			$behaviorCnt++;
 			echo '</div> </div>';
 		}
 		?>
-		
-		<input type="hidden" name="userID" value=<?php echo $studentID; ?> />
-		<input type="hidden" name="prjID" value=<?php echo $prjID; ?> />
+
 		<div id="piechart" >
 			<h4> Overall </h4>
-			<textarea rows="5" cols="50">Holder for Pie Chart!!1!1</textarea>
+			<p>Holder for Pie Chart!!1!1</p>
 		</div>
 		<input type="submit" value="Submit" />
 	</form>
 </body>
 
 <script>
-	$(function() {
-
-	
+	$(function() {	
 		$( ".ac" ).accordion({
 			autoHeight: false,
 			navigation: true	
