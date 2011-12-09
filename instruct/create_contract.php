@@ -41,18 +41,15 @@ $prjName = $prjName['PrjName'];
 			// Get the id of a group
 			$groupIDQuery = mysql_query( "SELECT G.GrpID FROM Groups G WHERE
                                 G.PrjID = " . $prjID . ";");
-			$groupID = mysql_fetch_array ( $groupIDQuery );
+
+			$groupID = mysql_fetch_assoc ( $groupIDQuery );
 			$groupID = $groupID['GrpID'];
 
 			// Get all behaviors for the group
 			$groupQuery = mysql_query ( "SELECT * FROM Behaviors WHERE
                               GrpID = " . $groupID . ";" );
 
-			$numResults = mysql_num_rows( $groupQuery );			
-			
-
-			$numResults = mysql_num_rows( $groupQuery );
-
+			$numResults = mysql_num_rows( $groupQuery );	
 
 			// Get all other contract info
 			$contractInfoQuery = mysql_query ( "SELECT * FROM ContractInfo WHERE 

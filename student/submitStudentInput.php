@@ -29,5 +29,6 @@ foreach ( $_POST['student'] as $student_id=>$student ){
 	}
 }
 echo '<META HTTP-EQUIV="Refresh" Content="0; URL=index.php">';	
+exit;
 ?>
 
