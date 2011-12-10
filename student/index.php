@@ -4,8 +4,8 @@ error_reporting(-1);
 
 include ( "../includes/config.php" );
 include ( "../includes/opendb.php" );
-$userID = 8;
-$_SESSION['userID'] = $userID;
+
+$userID = $_SESSION['userID'];
 
 // If the project was changed load the new team list into the session
 if ( !empty( $_POST['projectSelect'] ) && $_POST['projectSelect'] != $_SESSION['prjID'] ) {
@@ -37,11 +37,15 @@ if ( !empty( $_POST['projectSelect'] ) && $_POST['projectSelect'] != $_SESSION['
 // Get an array of all projects the student is working on
 $projectQueryString = 'SELECT G.PrjID, P.PrjName 
 	FROM Groups G, Project P WHERE G.PrjID = P.PrjID AND G.StudentID = ' . $userID . ';';
+
 $projectQuery = mysql_query ( $projectQueryString );
+$numProjects = mysql_num_rows( $projectQuery ); 
 // Initialize a count to help with array creation
 $cnt = 0;
-// Create an array of projects this student is working on
-while ( $row = mysql_fetch_array( $projectQuery ) ) {
+
+if ( $numProjects > 0 ) {
+	// Create an array of projects this student is working on
+	while ( $row = mysql_fetch_array( $projectQuery ) ) {
 		$project[$cnt]['prjID'] = $row['PrjID'];
 		$project[$cnt]['prjName'] = $row['PrjName'];
 		// Set aside the name of the current project
@@ -49,9 +53,53 @@ while ( $row = mysql_fetch_array( $projectQuery ) ) {
 				$prjName = $project[$cnt]['prjName'];
 		// Increment the count for the array
 		$cnt++;
-}
-if ( empty ( $_SESSION['prjID'] ) )
+	}
+	if ( empty ( $_SESSION['prjID'] ) )
 		$_SESSION['prjID'] = $project[0]['prjID'];
+	
+	
+	$projResult = mysql_query ("SELECT  CourseID FROM Project WHERE PrjID = ".$_SESSION['prjID']." ;");
+	$row = mysql_fetch_assoc( $projResult );
+
+	$_SESSION['crsID'] = $row['CourseID'];  
+
+	// Get the course roster
+	$result = mysql_query ("SELECT u.firstname, u.lastname, u.id FROM mdl_course c 
+							LEFT OUTER JOIN mdl_context cx ON c.id = cx.instanceid 
+							LEFT OUTER JOIN mdl_role_assignments ra ON cx.id = ra.contextid 
+							AND ra.roleid = '5' 
+							LEFT OUTER JOIN mdl_user u ON ra.userid = u.id 
+							WHERE cx.contextlevel = '50' AND c.id= " . $_SESSION['crsID'] );
+	
+	$i = 0;
+	unset( $_SESSION['roster'] );
+	// Put the roster into an array in the session
+	while ( $row = mysql_fetch_assoc( $result ) ) {
+		if ( !empty( $_SESSION['roster'] ) ) {
+			$_SESSION['roster'] += array($i => array("name" => ($row['firstname'] . " " . $row['lastname']), "id" => $row['id']));
+		}
+		else {			
+			$_SESSION['roster'] = array( array("name" => ($row['firstname'] . " " . $row['lastname']), "id" => $row['id']));
+		}
+		$i++;
+	}
+	
+	// Get a list of students in the group based on the roster
+	// Get the ID's of all group members
+	unset( $_SESSION['group'] );
+	$groupSdtIDQueryString = ( 'SELECT G.StudentID FROM Groups G WHERE G.GrpID = ' . $_SESSION['groupID'] ); 
+	$groupSdtIDQuery = mysql_query( $groupSdtIDQueryString ) or die( 'Could not retrieve the list of group members' );
+
+	while ( $studentID = mysql_fetch_assoc( $groupSdtIDQuery ) ) {
+		foreach ( $_SESSION['roster'] as $student ) {
+			if ( $student['id'] == $studentID['StudentID'] ) 
+				$_SESSION['group']['id'] = $student['name'];
+		}
+	}
+	
+	
+}
+else $_SESSION['prjID'] = -1;
 
 ?>
 
@@ -87,11 +135,16 @@ if ( empty ( $_SESSION['prjID'] ) )
 					if ( !empty( $prjName ) ) {
 						echo '<p> Project ' . $prjName . ' selected, change project? </p>';
 					}
+					else if ( $numProjects == 0 ) {
+						echo '<p> You are currently not in any projects! </p>';
+					}
 					else {
 						echo '<p> Select a project to begin </p>';
 					}
 					?>
-					<select id='projectSelect' name='projectSelect' onchange='this.form.submit()'>
+					<select id='projectSelect' name='projectSelect' 
+						<?php if( $numProjects == 0 ) echo 'disabled="disabled"'; ?>
+						onchange='this.form.submit()'>
 						<?php // Compile a list of all projects for this class
 						foreach ( $project as $prj ) {
 							print_r ($prj);
