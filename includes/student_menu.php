@@ -4,10 +4,13 @@ $root = "http://".$_SERVER['SERVER_NAME'];
 
 // Figure out if the current project allows for student contract editing
 if ( $_SESSION['prjID'] != -1 ) {
-	$contractCreatorQueryString = 'SELECT P.ContractCreator FROM Project P WHERE P.PrjID = ' . $_SESSION['prjID'] . ';';
-	$contractCreatorQuery = mysql_query ( $contractCreatorQueryString );
-	$contractCreator = mysql_fetch_array ( $contractCreatorQuery );
-	$contractCreator = $contractCreator[0];
+	$contractCreatorQueryString = 'SELECT P.ContractCreator FROM Project P WHERE P.PrjID = ' . $_SESSION['prjID'] . ';'; 
+	$contractCreatorQuery = mysql_query ( $contractCreatorQueryString ) or die ('ERROR: instruct_menu.php could not find contract' );
+	
+	if ( $contractCreatorQuery ) {
+		$contractCreator = mysql_fetch_array ( $contractCreatorQuery );
+		$contractCreator = $contractCreator[0];
+	}
 }
 ?>
 
