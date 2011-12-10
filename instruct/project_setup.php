@@ -140,9 +140,6 @@ error_reporting(-1);
         	});
 
 	});
-	
-	//
-
 </script>
 </html>
 

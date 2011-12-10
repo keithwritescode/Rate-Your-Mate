@@ -7,8 +7,11 @@ include ("../includes/opendb.php");
 $prjID = $_SESSION['prjID'];
 // Get the name of the project
 $prjNameQuery = mysql_query ('SELECT P.PrjName FROM Project P WHERE P.PrjID = ' . $prjID . ';' ) or die( 'ERROR: Could not retrieve project name' );
-$prjName = mysql_fetch_array( $prjNameQuery );
-$prjName = $prjName['PrjName'];
+$prjName = '';
+if ( $prjNameQuery ) {
+	$prjName = mysql_fetch_array( $prjNameQuery );
+	$prjName = $prjName['PrjName'];
+}
 
 // Assign the current group
 if ( !empty( $_POST['groupID'] ) )
@@ -47,17 +50,21 @@ if ( !empty( $_POST['groupID'] ) )
 			<select name="groupID" onchange='this.form.submit()'>
 			
 			<?php
-			while ( $groupID = mysql_fetch_array ( $groupIDQuery ) ) {
-				print_r($groupID);
-				$groupIDArr[$cnt] = $groupID['GrpID'];
-				if ( $_SESSION['GrpID'] == $groupID['GrpID'] )
-					$defaultString = 'selected="selected"';
-				else $defaultString = '';
-				if ( empty( $_SESSION['GrpID'] ) ) 
-					$_SESSION['GrpID'] = $groupID['GrpID'];
-				echo '<option value="' . $groupID['GrpID'] . '" ' . $defaultString . '> Team ' . $cnt++ . '</option>';
+			if ( $groupIDQuery ) {
+				while ( $groupID = mysql_fetch_array ( $groupIDQuery ) ) {
+					print_r($groupID);
+					$groupIDArr[$cnt] = $groupID['GrpID'];
+					if ( $_SESSION['GrpID'] == $groupID['GrpID'] )
+						$defaultString = 'selected="selected"';
+					else $defaultString = '';
+					if ( empty( $_SESSION['GrpID'] ) ) 
+						$_SESSION['GrpID'] = $groupID['GrpID'];
+					echo '<option value="' . $groupID['GrpID'] . '" ' . $defaultString . '> Team ' . $cnt++ . '</option>';
+				}
 			}
-			?> 
+			else { ?>
+				<select> No groups found </select>
+			<?php } ?> 
 			</select>
 			</form>
 			<?php
@@ -69,10 +76,12 @@ if ( !empty( $_POST['groupID'] ) )
 			// Get the ID's of all group members
 			$groupSdtIDQueryString = ( 'SELECT G.StudentID FROM Groups G WHERE G.GrpID = ' . $_SESSION['GrpID'] ); 
 			$groupSdtIDQuery = mysql_query( $groupSdtIDQueryString ) or die( 'Could not retrieve the list of group members' );
-			while ( $studentID = mysql_fetch_array( $groupSdtIDQuery ) ) {
-				foreach ( $_SESSION['roster'] as $student ) {
-					if ( $student['id'] == $studentID['StudentID'] ) 
-						echo '<li>' . $student['name'] . '</li>';
+			if ( $groupSdtIDQuery) {
+				while ( $studentID = mysql_fetch_array( $groupSdtIDQuery ) ) {
+					foreach ( $_SESSION['roster'] as $student ) {
+						if ( $student['id'] == $studentID['StudentID'] ) 
+							echo '<li>' . $student['name'] . '</li>';
+					}
 				}
 			}
 			// Get all behaviors for the group

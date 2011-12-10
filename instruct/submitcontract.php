@@ -1,16 +1,24 @@
-<?php
+<?php include ("../includes/check_authorization.php");
+
 include ( "../includes/config.php" );
 include ( "../includes/opendb.php" );
 
 // Get all Group IDs
-$groupIDQueryString = ( " SELECT DISTINCT G.GrpID FROM Groups G WHERE
-		G.PrjID = ".$_POST['prjID'].";" );
-$groupIDQuery = mysql_query ( $groupIDQueryString );
-$cnt = 0;
-while ( $row = mysql_fetch_array( $groupIDQuery ) ) {
-	$groupArr[$cnt++] = $row['GrpID'];
+if ( !empty( $_POST['prjID'] ) {
+	$groupIDQueryString = ( " SELECT DISTINCT G.GrpID FROM Groups G WHERE
+			G.PrjID = ".$_POST['prjID'].";" );
+	$groupIDQuery = mysql_query ( $groupIDQueryString );
+	
+	$cnt = 0;
+	while ( $row = mysql_fetch_array( $groupIDQuery ) ) {
+        	$groupArr[$cnt++] = $row['GrpID'];
+	}
 }
-print_r($groupArr);
+else {
+	$_SESSION['message'] = 'No Project ID provided, project not submitted';
+	echo '<META HTTP-EQUIV="Refresh" Content="0; URL=index.php">';
+	exit;
+}
 
 // Get all behaviors for the group
 $groupQueryString = ( " SELECT B.* FROM Behaviors B WHERE
@@ -45,6 +53,7 @@ foreach ( $groupArr as $groupID ) {
 	}
 }
 echo '<META HTTP-EQUIV="Refresh" Content="0; URL=index.php">';
+exit;
 ?>
 
 
