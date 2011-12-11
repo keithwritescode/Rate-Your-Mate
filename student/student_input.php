@@ -6,14 +6,14 @@ include ("../includes/config.php");
 include ("../includes/opendb.php");
 
 // Brought in from POST/SESSION
-$studentID = 4;
+$studentID = $_SESSION['userID'];
 // Brought in through POST
 $prjID = $_SESSION['prjID'];
 
 // Get the behavior list
 $behaviorQuery = mysql_query( 'SELECT B.BehaviorID, B.Description
 				FROM Behaviors B
-				WHERE B.GrpID = ' . $_SESSION['groupID'] . ';');	
+				WHERE B.GrpID = ' . $_SESSION['groupID'] . ';') or die ( 'ERROR: Could not find group id' );	
 
 ?>
 
@@ -29,7 +29,7 @@ $behaviorQuery = mysql_query( 'SELECT B.BehaviorID, B.Description
 <body>
 
 <div id="header">
-	<h2>Student Input</h2>
+	<h1>Student Input</h1>
 </div>
 
 <div id="menu">
@@ -46,7 +46,7 @@ $behaviorQuery = mysql_query( 'SELECT B.BehaviorID, B.Description
 
 	<form action="submitStudentInput.php" method="POST"> 
 	
-		<?php
+		<?php	
 		$behaviorCnt = 1;
 		// Go through each behavior
 		while ( $row = mysql_fetch_array( $behaviorQuery ) ) {
@@ -58,11 +58,14 @@ $behaviorQuery = mysql_query( 'SELECT B.BehaviorID, B.Description
 
 			echo '<div class="ac" >';
 			// List a box for each student in the group
-			foreach ( $_SESSION['groupList'] as $student ) {
-				echo '<h3> <a href="#"> Student Name goes here ' . $studentCnt . '</a></h3>';
-				echo '<div><textarea name=student['.$student['studentID'].']['.$behaviorCnt.']
-					rows="5" cols="50">Student ID '.$student['studentID'].'</textarea></div>';
-			}
+			foreach ( $_SESSION['group'] as $id => $name ) {
+				if ( $id != $_SESSION['userID'] ) {
+					// LINE TO PRINT STUDENT NAMES TO BOXES				
+					echo '<h3> <a href="#"> '  . $name . '</a></h3>';
+						echo '<div><textarea name=student['.$id.']['.$behaviorCnt.']
+							rows="5" cols="50">Student ID '.$id.'</textarea></div>';
+					}
+				}
 			$behaviorCnt++;
 			echo '</div> </div>';
 		}

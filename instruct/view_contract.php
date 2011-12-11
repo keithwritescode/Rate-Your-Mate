@@ -6,9 +6,12 @@ include ("../includes/opendb.php");
 
 $prjID = $_SESSION['prjID'];
 // Get the name of the project
-$prjNameQuery = mysql_query ('SELECT P.PrjName FROM Project P WHERE P.PrjID = ' . $prjID . ';' );
-$prjName = mysql_fetch_array( $prjNameQuery );
-$prjName = $prjName['PrjName'];
+$prjNameQuery = mysql_query ('SELECT P.PrjName FROM Project P WHERE P.PrjID = ' . $prjID . ';' ) or die( 'ERROR: Could not retrieve project name' );
+$prjName = '';
+if ( $prjNameQuery ) {
+	$prjName = mysql_fetch_array( $prjNameQuery );
+	$prjName = $prjName['PrjName'];
+}
 
 // Assign the current group
 if ( !empty( $_POST['groupID'] ) )
@@ -39,7 +42,7 @@ if ( !empty( $_POST['groupID'] ) )
 			<?php
 			// Get all groups for this project
 			$groupIDQuery = mysql_query ( " SELECT DISTINCT G.GrpID FROM Groups G WHERE
-                                G.PrjID = ".$prjID);
+                                G.PrjID = ".$prjID) or die ( 'ERROR: Could not retrieve the groups for this project' );
 			$cnt = 1;
 			?>
 			
@@ -47,17 +50,21 @@ if ( !empty( $_POST['groupID'] ) )
 			<select name="groupID" onchange='this.form.submit()'>
 			
 			<?php
-			while ( $groupID = mysql_fetch_array ( $groupIDQuery ) ) {
-				print_r($groupID);
-				$groupIDArr[$cnt] = $groupID['GrpID'];
-				if ( $_SESSION['GrpID'] == $groupID['GrpID'] )
-					$defaultString = 'selected="selected"';
-				else $defaultString = '';
-				if ( empty( $_SESSION['GrpID'] ) ) 
-					$_SESSION['GrpID'] = $groupID['GrpID'];
-				echo '<option value="' . $groupID['GrpID'] . '" ' . $defaultString . '> Team ' . $cnt++ . '</option>';
+			if ( $groupIDQuery ) {
+				while ( $groupID = mysql_fetch_array ( $groupIDQuery ) ) {
+					print_r($groupID);
+					$groupIDArr[$cnt] = $groupID['GrpID'];
+					if ( $_SESSION['GrpID'] == $groupID['GrpID'] )
+						$defaultString = 'selected="selected"';
+					else $defaultString = '';
+					if ( empty( $_SESSION['GrpID'] ) ) 
+						$_SESSION['GrpID'] = $groupID['GrpID'];
+					echo '<option value="' . $groupID['GrpID'] . '" ' . $defaultString . '> Team ' . $cnt++ . '</option>';
+				}
 			}
-			?> 
+			else { ?>
+				<select> No groups found </select>
+			<?php } ?> 
 			</select>
 			</form>
 			<?php
@@ -68,22 +75,24 @@ if ( !empty( $_POST['groupID'] ) )
 
 			// Get the ID's of all group members
 			$groupSdtIDQueryString = ( 'SELECT G.StudentID FROM Groups G WHERE G.GrpID = ' . $_SESSION['GrpID'] ); 
-			$groupSdtIDQuery = mysql_query( $groupSdtIDQueryString );
-			while ( $studentID = mysql_fetch_array( $groupSdtIDQuery ) ) {
-				foreach ( $_SESSION['roster'] as $student ) {
-					if ( $student['id'] == $studentID['StudentID'] ) 
-						echo '<li>' . $student['name'] . '</li>';
+			$groupSdtIDQuery = mysql_query( $groupSdtIDQueryString ) or die( 'Could not retrieve the list of group members' );
+			if ( $groupSdtIDQuery) {
+				while ( $studentID = mysql_fetch_array( $groupSdtIDQuery ) ) {
+					foreach ( $_SESSION['roster'] as $student ) {
+						if ( $student['id'] == $studentID['StudentID'] ) 
+							echo '<li>' . $student['name'] . '</li>';
+					}
 				}
 			}
 			// Get all behaviors for the group
 			$groupQuery = mysql_query( " SELECT * FROM Behaviors WHERE
                               GrpID = " . $_SESSION['GrpID'] . ";" );
-			$numResults = mysql_num_rows( $groupQuery );
+			$numResults = mysql_num_rows( $groupQuery ) or die ( 'Could not retrieve the behavior list for the group, contract may not exist' );
 			
 			// Get all other contract info
 			$contractInfoQuery = mysql_query (" SELECT * FROM ContractInfo WHERE 
 				GrpID = " . $_SESSION['GrpID'] . ";" );
-			$contractInfo = mysql_fetch_array ( $contractInfoQuery );
+			$contractInfo = mysql_fetch_array ( $contractInfoQuery )or die ( 'Could not retrieve contract info list for the group, contract may not exist' );
 			?>
 		</div>
 

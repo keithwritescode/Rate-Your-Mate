@@ -5,17 +5,23 @@ include ("../includes/config.php");
 include ("../includes/opendb.php");
 
 $prjID = $_SESSION['prjID'];
-$creatorQuery = mysql_query( 'SELECT P.ContractCreator FROM Project P WHERE P.PrjID = ' . $prjID . ';' );
-$creator = mysql_fetch_array( $creatorQuery );
-$creator = $creator[0];
-if ( $creator != 1 ) {
-	echo '<META HTTP-EQUIV="Refresh" Content="0; URL=index.php">';	
-	exit;
-}
-$prjNameQuery = mysql_query ('SELECT P.PrjName FROM Project P WHERE P.PrjID = ' . $prjID . ';' );
-$prjName = mysql_fetch_array( $prjNameQuery );
-$prjName = $prjName['PrjName'];
+$creatorQuery = mysql_query( 'SELECT P.ContractCreator FROM Project P WHERE P.PrjID = ' . $prjID . ';' ) or die ( 'ERROR: create_contract cannot find contract' );
 
+if ( $creatorQuery ) {
+	$creator = mysql_fetch_array( $creatorQuery );
+	$creator = $creator[0];
+	if ( $creator != 1 ) {
+		echo '<META HTTP-EQUIV="Refresh" Content="0; URL=index.php">';	
+		exit;
+	}
+}
+$prjNameQuery = mysql_query ('SELECT P.PrjName FROM Project P WHERE P.PrjID = ' . $prjID . ';' ) or die ( 'ERROR: create_contract cannot find project' );
+
+if ( $prjNameQuery ) {
+	$prjName = mysql_fetch_array( $prjNameQuery );
+	$prjName = $prjName['PrjName'];
+}
+else $prjName = 'NULL';
 ?>
 <html>
 	<head>
@@ -40,25 +46,25 @@ $prjName = $prjName['PrjName'];
 		<?php
 			// Get the id of a group
 			$groupIDQuery = mysql_query( "SELECT G.GrpID FROM Groups G WHERE
-                                G.PrjID = " . $prjID . ";");
-			$groupID = mysql_fetch_array ( $groupIDQuery );
-			$groupID = $groupID['GrpID'];
-
+                                G.PrjID = " . $prjID . ";"); 
+			if ( $groupIDQuery ) {
+				$groupID = mysql_fetch_assoc ( $groupIDQuery );
+				$groupID = $groupID['GrpID'];
+			}
+			else $groupID = -1;
+			
 			// Get all behaviors for the group
 			$groupQuery = mysql_query ( "SELECT * FROM Behaviors WHERE
-                              GrpID = " . $groupID . ";" );
+                       	      GrpID = " . $groupID . ";" );
+				
+			if ( $groupQuery ) {
+				$numResults = mysql_num_rows( $groupQuery );	
 
-			$numResults = mysql_num_rows( $groupQuery );			
-			
-
-			$numResults = mysql_num_rows( $groupQuery );
-
-
-			// Get all other contract info
-			$contractInfoQuery = mysql_query ( "SELECT * FROM ContractInfo WHERE 
-				GrpID = " . $groupID . ";" );
-			$contractInfo = mysql_fetch_array ( $contractInfoQuery );
-
+				// Get all other contract info
+				$contractInfoQuery = mysql_query ( "SELECT * FROM ContractInfo WHERE 
+					GrpID = " . $groupID . ";" );
+				$contractInfo = mysql_fetch_array ( $contractInfoQuery );
+			} else $numResults = -1;
 			?>
 
 
@@ -67,12 +73,13 @@ $prjName = $prjName['PrjName'];
 			<form id="contractsetup" name="contractsetup" action="submitcontract.php" method="post">
 				<div id="border1">					
 					<p> Group Goals </p>
-					<textarea wrap="virutal" name="groupGoals" rows="5" cols="50"> <?php echo trim( $contractInfo['Goals'] ); ?> </textarea>
+					<textarea wrap="virutal" name="groupGoals" rows="5" cols="50"> 
+						<?php if ($numResults != -1 ) echo trim( $contractInfo['Goals'] ); ?> </textarea>
 				</div>	
 				<div id="behaviors" class='behaviors'>
 					<p> How many behaviors will the contract contain? </p>
 					<input type="number" id="groupText" name="numBehaviors" value="<?php
-						if ($numResults > 0)
+						if ( $numResults > 0 )
 							echo $numResults;
 						else
 							echo 1; ?>" 
@@ -101,7 +108,8 @@ $prjName = $prjName['PrjName'];
 
 			<div id="border1">
 					<p>Additional Comments<p/>
-					<textarea wrap="virutal" name="additional" rows="5" cols="50"> <?php echo trim( $contractInfo['Comments'] ); ?> </textarea>
+					<textarea wrap="virutal" name="additional" rows="5" cols="50"> 
+						<?php if ($numResults != -1 ) echo trim( $contractInfo['Comments'] ); ?> </textarea>
 					<br />
 					<input type="hidden" name="prjID" value="<?php echo $prjID ?>" />
 			</div>
