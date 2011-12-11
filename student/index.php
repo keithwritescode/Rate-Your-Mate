@@ -14,35 +14,47 @@ if ( !empty( $_POST['projectSelect'] ) && $_POST['projectSelect'] != $_SESSION['
 	// Get the group the student is in for the group
 	$groupIDQueryString = 'SELECT G.GrpID FROM Groups G WHERE G.StudentID = ' . $userID . ' AND G.PrjID = ' . $_SESSION['prjID'] . ';';
 	$groupIDQuery = mysql_query ( $groupIDQueryString );
-	$groupID = mysql_fetch_array ( $groupIDQuery );
-	$_SESSION['groupID'] = $groupID['GrpID'];
+	if ( $groupIDQuery ) {
+		$groupID = mysql_fetch_array ( $groupIDQuery );
+		$_SESSION['groupID'] = $groupID['GrpID'];
+	}
+	else $_SESSION['groupID'] = 0;
 
 	// Get all members of the group
 	$groupListQueryString = 'SELECT G.StudentID FROM Groups G WHERE G.GrpID = ' . $_SESSION['groupID'] . ';';
 	$groupListQuery = mysql_query ( $groupListQueryString );
 	
+	
 	// empty the current list
 	unset ( $_SESSION['groupList'] );
-
-	$cnt = 0;
-	while ( $row = mysql_fetch_array( $groupListQuery ) ) {
-		// Initialize the array if necessary
-		if ( $cnt++ == 0 )
-			$_SESSION['groupList'] = array ( array( 'studentID' => $row['StudentID'] ) );
-		else
-			array_push( $_SESSION['groupList'], array( 'studentID' => $row['StudentID'] ) );	
+	$_SESSION['groupList'] = array();
+	
+	if( $groupListQuery ) {
+		$cnt = 0;
+		while ( $row = mysql_fetch_array( $groupListQuery ) ) {
+			// Initialize the array if necessary
+			if ( $cnt++ == 0 )
+				$_SESSION['groupList'] = array ( array( 'studentID' => $row['StudentID'] ) );
+			else
+				array_push( $_SESSION['groupList'], array( 'studentID' => $row['StudentID'] ) );	
+		}
 	}
 }
 	
 // Get an array of all projects the student is working on
 $projectQueryString = 'SELECT G.PrjID, P.PrjName 
 	FROM Groups G, Project P WHERE G.PrjID = P.PrjID AND G.StudentID = ' . $userID . ';';
-
 $projectQuery = mysql_query ( $projectQueryString );
-$numProjects = mysql_num_rows( $projectQuery ); 
+
+$project = array();
+
+if ( $projectQuery ) {
+	$numProjects = mysql_num_rows( $projectQuery ); 
+}
+else $numProjects = -1;
+
 // Initialize a count to help with array creation
 $cnt = 0;
-
 if ( $numProjects > 0 ) {
 	// Create an array of projects this student is working on
 	while ( $row = mysql_fetch_array( $projectQuery ) ) {
@@ -59,9 +71,10 @@ if ( $numProjects > 0 ) {
 	
 	
 	$projResult = mysql_query ("SELECT  CourseID FROM Project WHERE PrjID = ".$_SESSION['prjID']." ;");
-	$row = mysql_fetch_assoc( $projResult );
-
-	$_SESSION['crsID'] = $row['CourseID'];  
+	if ( $projResult ) {
+		$row = mysql_fetch_assoc( $projResult );
+		$_SESSION['crsID'] = $row['CourseID'];  
+	} else $_SESSION['crsID'] = 0;
 
 	// Get the course roster
 	$result = mysql_query ("SELECT u.firstname, u.lastname, u.id FROM mdl_course c 
@@ -70,20 +83,21 @@ if ( $numProjects > 0 ) {
 							AND ra.roleid = '5' 
 							LEFT OUTER JOIN mdl_user u ON ra.userid = u.id 
 							WHERE cx.contextlevel = '50' AND c.id= " . $_SESSION['crsID'] );
-	
-	$i = 0;
-	unset( $_SESSION['roster'] );
-	// Put the roster into an array in the session
-	while ( $row = mysql_fetch_assoc( $result ) ) {
-		if ( !empty( $_SESSION['roster'] ) ) {
-			$_SESSION['roster'] += array($i => array("name" => ($row['firstname'] . " " . $row['lastname']), "id" => $row['id']));
+	$_SESSION['roster'] = array();
+	if ( $result ) {
+		$i = 0;
+		unset( $_SESSION['roster'] );
+		// Put the roster into an array in the session
+		while ( $row = mysql_fetch_assoc( $result ) ) {
+			if ( !empty( $_SESSION['roster'] ) ) {
+				$_SESSION['roster'] += array($i => array("name" => ($row['firstname'] . " " . $row['lastname']), "id" => $row['id']));
+			}
+			else {			
+				$_SESSION['roster'] = array( array("name" => ($row['firstname'] . " " . $row['lastname']), "id" => $row['id']));
+			}
+			$i++;
 		}
-		else {			
-			$_SESSION['roster'] = array( array("name" => ($row['firstname'] . " " . $row['lastname']), "id" => $row['id']));
-		}
-		$i++;
 	}
-	
 	// Get a list of students in the group based on the roster
 	// Get the ID's of all group members
 	unset( $_SESSION['group'] );
