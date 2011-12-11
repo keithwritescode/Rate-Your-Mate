@@ -105,7 +105,7 @@ ul, ol {
         font-family: Lucida Console;
         font-size: 13px;
         font-weight: bold;
-        color: #b4b4b4;
+        color: #a4a4a4;
 } 
 
 
@@ -215,9 +215,4 @@ ul, ol {
 	position: relative;
 	top: 40px;
 	margin 0px;
-}
-
-#table {
-	text-align: center;
-	 color: #b4b4b4;
 }

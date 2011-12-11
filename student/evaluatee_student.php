@@ -41,19 +41,17 @@ include ("../includes/opendb.php");
 
 </p>
 
-
-
+<div id="border4">
 <?php
 $query="SELECT c.Comment, c.SrcId FROM Comments c";
 
 $result=mysql_query($query);
 
-echo "<table border='1'>
+echo "<table border='none', cell spacing='10',
 
 <tr>
-
-<th>Student Reviews</th>
-<th>Comments</th>
+<th><font color=#222222><font size=+1>Student Reviews</th></font></font>
+<th><font color=#222222><font size=+1>Comments</th></font></font>
 </tr>";
 
 while($row = mysql_fetch_array($result))
@@ -61,12 +59,12 @@ while($row = mysql_fetch_array($result))
 
  echo "<tr>";
 
- echo "<td>" . $row['Comment'] . "</td>";
+ echo "<td width=3%>" . "<font color=#223333>" . "<font size=+1>" . $row['Comment'] . "</td>" . "</font>" . "</font>";
+ 
+ echo "<td width=3%>" . "<font color=#223333>" . "<font size=+1>" . $row['SrcId'] . "</td>". "</font>". "</font>";
 
- echo "<td>" . $row['SrcId'] . "</td>";
-
-  echo "</tr>";
-  }
+ echo "</tr>";
+ }
 
 echo "</table>";
 
@@ -74,9 +72,7 @@ echo "</table>";
 
 ?>
 
-
-
-
+</div>
 
 </br>
 
