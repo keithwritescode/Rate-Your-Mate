@@ -71,7 +71,7 @@ else $prjName = 'NULL';
 
 		<div id="content">
 			<form id="contractsetup" name="contractsetup" action="submitcontract.php" method="post">
-				<div id="border1">					
+				<div id="border3">					
 					<p> Group Goals </p>
 					<textarea wrap="virutal" name="groupGoals" rows="5" cols="50"> 
 						<?php if ($numResults != -1 ) echo trim( $contractInfo['Goals'] ); ?> </textarea>
@@ -106,7 +106,7 @@ else $prjName = 'NULL';
 
 	
 
-			<div id="border1">
+			<div id="border3">
 					<p>Additional Comments<p/>
 					<textarea wrap="virutal" name="additional" rows="5" cols="50"> 
 						<?php if ($numResults != -1 ) echo trim( $contractInfo['Comments'] ); ?> </textarea>

@@ -133,6 +133,13 @@ ul, ol {
 	border: 5px solid gray;
 }
 
+#border3 {
+	height: 0px auto;
+	width: 450px;
+	padding: 10px 10px 10px 10px;
+	border: 5px solid gray;
+}
+
 #rosterSource {
 	position: relative;
 	width: 200px;
