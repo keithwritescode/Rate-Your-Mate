@@ -11,22 +11,26 @@ include ("../includes/opendb.php");
 	<link rel="stylesheet" type="text/css" href="../css/dateStyle.css" />
 	<link rel="stylesheet" type="text/css" href="../css/style.css" />
 
-
         <title>Rate Your Mate</title>
 </head>
 
 <body>
-	<div id="header">
-		<h1>Student Evaluation Page</h1>
-	</div>
+<div id="header">
+	<h1>Student Evaluation Page</h1>
+</div>
+
 <div id="menu">
 	<?php include ("../includes/student_menu.php"); ?>
 </div>
 
 
 <div id="content">
+	<p> Below is your group members evaluation of your work based on behaviors in their contract. </p>
 
+	<?php
+	$query="SELECT c.Comment, c.SrcId FROM Comments c";
 
+<<<<<<< HEAD
 <p align="left">
 
 
@@ -67,11 +71,27 @@ while($row = mysql_fetch_array($result))
  }
 
 echo "</table>";
+=======
+	$result=mysql_query($query);
+>>>>>>> 400e90254d2fe5d67cd64ce0af0d07e49fad8b81
 
+	echo "<table border='1'>
+		<tr>
+		<th>Student Reviews</th>
+		<th>Comments</th>
+		</tr>";
 
+	while($row = mysql_fetch_array($result)) {
+	 echo "<tr>";
+	 echo "<td>" . $row['Comment'] . "</td>";
+	 echo "<td>" . $row['SrcId'] . "</td>";
+	 echo "</tr>";
+  	}
 
+	echo "</table>";
 ?>
 
+<<<<<<< HEAD
 </div>
 
 </br>
@@ -87,6 +107,8 @@ echo "</table>";
 
 
 
+=======
+>>>>>>> 400e90254d2fe5d67cd64ce0af0d07e49fad8b81
 </div>
 
 </body>

@@ -17,13 +17,12 @@ $behaviorQuery = mysql_query( 'SELECT B.BehaviorID, B.Description
 
 ?>
 
-
 <html>
 <head>
 	<title>Rate Your Mate</title>
 	<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
 	<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js'></script>
-    <script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js'></script>
+	<script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js'></script>
 	<link rel="stylesheet" type="text/css" href="../css/style.css" />
 </head>
 <body>
@@ -45,7 +44,6 @@ $behaviorQuery = mysql_query( 'SELECT B.BehaviorID, B.Description
 	</div>
 
 	<form action="submitStudentInput.php" method="POST"> 
-	
 		<?php	
 		$behaviorCnt = 1;
 		// Go through each behavior
@@ -63,7 +61,7 @@ $behaviorQuery = mysql_query( 'SELECT B.BehaviorID, B.Description
 					// LINE TO PRINT STUDENT NAMES TO BOXES				
 					echo '<h3> <a href="#"> '  . $name . '</a></h3>';
 						echo '<div><textarea name=student['.$id.']['.$behaviorCnt.']
-							rows="5" cols="50">Student ID '.$id.'</textarea></div>';
+							rows="5" cols="50">Insert text</textarea></div>';
 					}
 				}
 			$behaviorCnt++;
