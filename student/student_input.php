@@ -61,7 +61,7 @@ $behaviorQuery = mysql_query( 'SELECT B.BehaviorID, B.Description
 					// LINE TO PRINT STUDENT NAMES TO BOXES				
 					echo '<h3> <a href="#"> '  . $name . '</a></h3>';
 						echo '<div><textarea name=student['.$id.']['.$behaviorCnt.']
-							rows="5" cols="50">Student ID '.$id.'</textarea></div>';
+							rows="5" cols="50">Insert text</textarea></div>';
 					}
 				}
 			$behaviorCnt++;

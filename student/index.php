@@ -66,10 +66,29 @@ if ( $numProjects > 0 ) {
 		// Increment the count for the array
 		$cnt++;
 	}
-	if ( empty ( $_SESSION['prjID'] ) )
+	if ( empty ( $_SESSION['prjID'] ) ) {
 		$_SESSION['prjID'] = $project[0]['prjID'];
+		
+                // Get the group the student is in for the group
+                $groupIDQueryString = 'SELECT G.GrpID FROM Groups G WHERE G.StudentID = ' . $userID . ' AND G.PrjID = ' . $_SESSION['prjID'] . ';';
+
+		$groupIDQuery = mysql_query( $groupIDQueryString );
+
+	        if ( $groupIDQuery ) {
+        	        $groupID = mysql_fetch_array ( $groupIDQuery );
+                	$_SESSION['groupID'] = $groupID['GrpID'];
+        	}
+		else $_SESSION['groupID'] = 0;
+		
+		// Get the project name
+		foreach ( $project as $prj ) {
+			if ( $prj['prjID'] == $_SESSION['prjID'] )
+				$prjName = $prj['prjName'];
+		}
+	}	
 	
-	
+
+
 	$projResult = mysql_query ("SELECT  CourseID FROM Project WHERE PrjID = ".$_SESSION['prjID']." ;");
 	if ( $projResult ) {
 		$row = mysql_fetch_assoc( $projResult );
@@ -106,9 +125,11 @@ if ( $numProjects > 0 ) {
 
 	while ( $studentID = mysql_fetch_assoc( $groupSdtIDQuery ) ) {
 		foreach ( $_SESSION['roster'] as $student ) {
-			if ( $student['id'] == $studentID['StudentID'] ) 
-				$_SESSION['group']['id'] = $student['name'];
-		}
+			if ( $student['id'] == $studentID['StudentID'] ) { 
+				$_SESSION['group'][ $student['id'] ] = $student['name'];
+				
+			}
+		}	
 	}
 	
 	

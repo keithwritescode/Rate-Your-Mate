@@ -4,7 +4,7 @@ include ( "../includes/opendb.php" );
 
 
 $groupID = $_POST['groupID'];
-print_r( $_POST );
+
 // Get all behaviors for the group
 $groupQueryString = ( 'SELECT B.* FROM Behaviors B WHERE
                               B.GrpID = ' . $groupID . ';');
@@ -26,6 +26,7 @@ foreach ( $_POST['behavior'] as $behavior ) {
 		VALUES (" . $groupID . ", '" . trim( $behavior ) . "');" );
 }
 echo '<META HTTP-EQUIV="Refresh" Content="0; URL=index.php">';
+exit;
 ?>
 
 
