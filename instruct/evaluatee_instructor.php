@@ -89,8 +89,6 @@ else $evalType = 'target';
 		<?php if( $evalType == 'source' ) echo 'checked'; ?>/> Evaluations by this student 
 	</form>
 		
-	<h4>Below is the feedback for <?php echo $studentName; ?> from their teammates </h4>
-
 	<?php
 	// Get all the behaviors the group has
 	$behaviorQueryString = ( 'SELECT B.BehaviorID, B.Description
@@ -110,30 +108,55 @@ else $evalType = 'target';
 	while ( $behavior = mysql_fetch_array( $behaviorQuery ) ) {
 		$behaviorArr[ $behavior['BehaviorID'] ] = $behavior['Description'];
 	}
-	
-	// Get all comments related to this student for this project	
-	$commentQueryString = 'SELECT C.SrcId, C.Comment, C.BehaviorId FROM Comments C 
-		WHERE C.PrjID = ' . $_SESSION['prjID'] . ' AND C.TargetId = ' . $_SESSION['studentID'] . ' ORDER BY C.BehaviorId;';
-	$commentQuery = mysql_query( $commentQueryString ) or die ( 'Could not find student comments' );
 
-	// Print out the behavior
-	$cnt = 0;
-	while ( $comment = mysql_fetch_array( $commentQuery ) ) {
-		// If this is the first for this behavior, create a header
-		if ( empty( $currBehavior ) || $currBehavior != $comment['BehaviorId'] ) {
-			echo '<h4> ' . $behaviorArr[ $comment['BehaviorId'] ] . '</h4>';
-			$currBehavior = $comment['BehaviorId'];
+	if ( $evalType == 'target' ) {
+		echo  '<h4>Below is the feedback for ' . $studentName . ' from their teammates </h4>';
+	
+		// Get all comments related to this student for this project	
+		$commentQueryString = 'SELECT C.SrcId, C.Comment, C.BehaviorId FROM Comments C 
+			WHERE C.PrjID = ' . $_SESSION['prjID'] . ' AND C.TargetId = ' . $_SESSION['studentID'] . ' ORDER BY C.BehaviorId;';
+		$commentQuery = mysql_query( $commentQueryString ) or die ( 'Could not find student comments' );
+
+		// Print out the behavior
+		$cnt = 0;
+		while ( $comment = mysql_fetch_array( $commentQuery ) ) {
+			// If this is the first for this behavior, create a header
+			if ( empty( $currBehavior ) || $currBehavior != $comment['BehaviorId'] ) {
+				echo '<h4> ' . $behaviorArr[ $comment['BehaviorId'] ] . '</h4>';
+				$currBehavior = $comment['BehaviorId'];
+			}
+			// Print out the student who wrote the review
+			echo '<p> Source: ' . $groupArr[$comment['SrcId'] ]. '</p>';
+			// Print out the comment
+			echo '<textarea> ' . trim( $comment['Comment'] ) . '</textarea>';
 		}
-		// Print out the student who wrote the review
-		echo '<p> Source: ' . $groupArr[$comment['SrcId'] ]. '</p>';
-		// Print out the comment
-		echo '<textarea> ' . trim( $comment['Comment'] ) . '</textarea>';
+	}
+	 
+	else if ( $evalType == 'source' ) {	
+                echo  '<h4>Below is the feedback from ' . $studentName . ' for their teammates </h4>';
+                // Get all comments related to this student for this project
+                $commentQueryString = 'SELECT C.TargetId, C.Comment, C.BehaviorId FROM Comments C
+                        WHERE C.PrjID = ' . $_SESSION['prjID'] . ' AND C.SrcId = ' . $_SESSION['studentID'] . ' ORDER BY C.BehaviorId;';
+                $commentQuery = mysql_query( $commentQueryString ) or die ( 'Could not find student comments' );
+		
+		// Print out the behavior
+		$cnt = 0;
+		while( $comment = mysql_fetch_array( $commentQuery ) ) {
+			// If this is the first for this behavior, create a header
+			if( empty( $currBehavior ) || $currBehavior != $comment['BehaviorId'] ) {
+				echo '<h4> ' . $behaviorArr[ $comment['BehaviorId'] ] . '</h4>';
+				$currBehavior = $comment['BehaviorId'];
+			}
+			// Print out student the comment is for
+			echo '<p> Target: ' . $groupArr[ $comment['TargetId'] ] . '</p>';
+			// Print out the comment
+			echo '<textarea>' . trim( $comment['Comment'] ) . '</textarea>';
+		}
 	}
 	}
 	else { ?>
-		<p> No contract was found for this group! </p>
-	<?php } ?>
- 
+		<p> No contract was found for the group </p> 
+	<?php } ?> 
 </div>
 
 </body>
