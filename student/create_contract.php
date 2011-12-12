@@ -6,15 +6,22 @@ include ("../includes/opendb.php");
 
 $prjID = $_SESSION['prjID'];
 $creatorQuery = mysql_query( 'SELECT P.ContractCreator FROM Project P WHERE P.PrjID = ' . $prjID . ';' );
-$creator = mysql_fetch_array( $creatorQuery );
-$creator = $creator[0];
+if ( $creatorQuery ) {
+	$creator = mysql_fetch_array( $creatorQuery );
+	$creator = $creator[0];}
+else $creator = 0;
+
 if ( $creator != 0 ) {
 	echo '<META HTTP-EQUIV="Refresh" Content="0; URL=index.php">';	
 	exit;
 }
+
 $prjNameQuery = mysql_query ('SELECT P.PrjName FROM Project P WHERE P.PrjID = ' . $prjID . ';' );
-$prjName = mysql_fetch_array( $prjNameQuery );
-$prjName = $prjName['PrjName'];
+if ( $prjNameQuery ) {
+	$prjName = mysql_fetch_array( $prjNameQuery );
+	$prjName = $prjName['PrjName'];
+}
+else $prjName = '';
 $groupID = $_SESSION['groupID'];
 
 ?>

@@ -23,7 +23,7 @@ include ( "../includes/opendb.php" );
 		}
 		?>	
 		<li> <a href="edit_project.php"> Edit current project </a> </li>
-		<li> <a href="evaluatee_instructor.php" > Instructor Evaluation </a> </li>
+		<li> <a href="evaluatee_instructor.php" > Evaluations </a> </li>
 	<?php } ?>
 </ul>
 

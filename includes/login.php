@@ -15,8 +15,8 @@ else {
 	session_start();
 }
 
-include ("../includes/config.php");
-include ("../includes/opendb.php");
+include ("includes/config.php");
+include ("includes/opendb.php");
 
 $_SESSION['username'] = $username;
 
