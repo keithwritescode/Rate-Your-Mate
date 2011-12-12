@@ -1,4 +1,5 @@
-﻿<!-- http://dmitry.baranovskiy.com/work/fiechart/ -->
+<?php include"setup.php"?>	
+<!-- http://dmitry.baranovskiy.com/work/fiechart/ -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -15,6 +16,9 @@
 	<script type="text/javascript" charset="utf-8" src="ajax.js"></script>
 	<script type="text/javascript" charset="utf-8" src="local.js"></script>
 	<script type="text/javascript" charset="utf-8" src="sliderSynch.js"></script>
+	<script type="text/javascript">
+		var teacher = <?php echo $teacher; ?>;
+	</script>
 </head>
 <body>
 	<div id="pie">
@@ -24,7 +28,7 @@
 	<form action="#no_javascript-no_fun" id="pie-form">
 		<div>
 		
-		
+    
       
 		<?php include"input.php"?>        
 
@@ -39,10 +43,11 @@
 				<!-- </button> -->
 				
 
-
+        <?php if ($teacher == 1){?>
 				<button type="button" id="perc">
 					<img src="percent.png" alt="Percentage view on/off" title="percentage view on/off" />
 				</button>
+				<?php } ?>
 
 				
 				<!-- this is just here cuz the js script is looking for those values -->

@@ -7,7 +7,7 @@ function PieChart () {
          title = 0, //0 - digits, 1 - percent, 2 - titles
            div = null,
              S = 15;
-       teacher = 1; //the roll of the viewer, 1 - Teacher
+       //the roll of the viewer, 1 - Teacher
     this.start = 0; //deg
     this.sum = 0;
     this.setValues = function(){
