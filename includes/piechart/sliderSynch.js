@@ -43,7 +43,7 @@ function correctValues()
     //console.log("in the first if");
     //console.log("currentTotal: " + currentTotal + " maxPoints: " + maxPoints);
     var lowNum = 0;
-    var highNum = 999999;
+    var highNum = 999999; //ITS OVER 9000!!!!
     if (currentTotal > maxPoints)
     {
       console.log("in the too many points if");
@@ -118,6 +118,7 @@ function getNextSlider(sliderNumb, addition_bool)
 function createSliders(num_groups, max_num) {
 
   $('.sliders').each(function(i) {
+	
     $("#slider" +i).slider({
       value: pos[i],
       stop: function (e, ui){

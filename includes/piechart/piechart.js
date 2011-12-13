@@ -10,8 +10,13 @@ function PieChart () {
        //the roll of the viewer, 1 - Teacher
     this.start = 0; //deg
     this.sum = 0;
+	this.reDraw = function(){
+		items = new array(pos);
+		this.redraw();
+	}
+	
     this.setValues = function(){
-        items = [];
+		items = [];
         titles = [];
         labels = [];
         if (typeof this.setValues.arguments[0] == "object" && this.setValues.arguments[0].length) {

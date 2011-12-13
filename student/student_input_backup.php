@@ -1,7 +1,6 @@
 <?php include ("../includes/check_authorization.php");
 error_reporting(-1);
 
-
 // Connect to the database
 include ("../includes/config.php");
 include ("../includes/opendb.php");
@@ -15,10 +14,7 @@ $prjID = $_SESSION['prjID'];
 $behaviorQuery = mysql_query( 'SELECT B.BehaviorID, B.Description
 				FROM Behaviors B
 				WHERE B.GrpID = ' . $_SESSION['groupID'] . ';') or die ( 'ERROR: Could not find group id' );	
-if (!empty($_SESSION['test']))
-{
-print_r ($_SESSION['test']);
-}
+
 ?>
 
 <html>
@@ -27,14 +23,9 @@ print_r ($_SESSION['test']);
 	<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
 	<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js'></script>
 	<script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js'></script>
-	<script type="text/javascript" charset="utf-8" src="../includes/piechart/piechart.js"></script>
-	<script type="text/javascript" charset="utf-8" src="../includes/piechart/ajax.js"></script>
-	<script type="text/javascript" charset="utf-8" src="../includes/piechart/local.js"></script>
-	<script type="text/javascript" charset="utf-8" src="../includes/piechart/sliderSynch.js"></script>
 	<link rel="stylesheet" type="text/css" href="../css/style.css" />
 </head>
 <body>
-
 
 <div id="header">
 	<h1>Student Input</h1>
@@ -51,8 +42,8 @@ print_r ($_SESSION['test']);
 		<p>Please evaluate your group members on each behavior in your contract.</p>
 		</br>
 	</div>
-<form action="/student_input.php" method="POST" >
-	
+
+	<form action="submitStudentInput.php" method="POST"> 
 		<?php	
 		$behaviorCnt = 1;
 		// Go through each behavior
@@ -72,7 +63,7 @@ print_r ($_SESSION['test']);
 						echo '<div><textarea name=student['.$id.']['.$behaviorCnt.']
 							rows="5" cols="50">Insert text</textarea></div>';
 					}
-				} 
+				}
 			$behaviorCnt++;
 			echo '</div> </div>';
 		}
@@ -80,27 +71,8 @@ print_r ($_SESSION['test']);
 
 		<div id="piechart" >
 			<h4> Overall </h4>
-			<style type="text/css" media="screen">
-	 	@import "../includes/piechart/piechart.css";
-	</style>
-			
-			<?php include "../includes/piechart/index.php" ?>
-			<script type="text/javascript">  
-				var runit = 0;
-				if (runit == 0)
-				{
-					$(function() {
-						setInterval("pc.setValues(pos)", 1);// run this once, a work around to the pie chart not auto rendering.
-					});
-					runit = 1;
-				}
-				
-			
-			</script>
+			<p>Holder for Pie Chart!!1!1</p>
 		</div>
-		<input  name = "scores">
-		<script type="text/javascript"> document.getElementById("scores").value = pos[0]; </script> 
-		
 		<input type="submit" value="Submit" />
 	</form>
 </body>

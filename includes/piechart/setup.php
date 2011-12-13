@@ -1,10 +1,11 @@
 <?php
-	session_start();
+	//session_start();
 	//$_SESSION['username'] = 'admin';
 	//$_SESSION['groupID'] = "1";
 	$username = "jadennett";
 	$password = "hensvolk";
 	$hostname = "turing"; 
+	$groupSize = 0;
 	//connection to the database
 	$dbhandle = mysql_connect($hostname, $username, $password) or die("Unable to connect to MySQL");
 	$selected = mysql_select_db("wp1",$dbhandle) or die("Could not select examples");
