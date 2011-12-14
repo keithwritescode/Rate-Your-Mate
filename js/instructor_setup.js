@@ -89,6 +89,7 @@ $(document).ready(function() {
 	else if ( num > newNum ) {
 		for ( var i = num; i > newNum; i-- ) {
 			$('.submitDate:last').remove();
+			$('#id:last').remove();
 		}
 	}
    });
