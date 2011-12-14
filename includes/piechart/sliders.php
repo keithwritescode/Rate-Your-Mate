@@ -60,13 +60,17 @@ $(document).ready(function() {
 </head>
 
 <body style="font-size:62.5%;">
+<table border="1">
 <?php
 for($i=0; $i<$groupSize; $i++) {
-  ?>    
-  <div id="slider<?php echo $i;?>" class="sliders"></div>
+  ?>  
+	<tr>
+	<td>name<?php echo $i; ?></td>
+  <td><div id="slider<?php echo $i;?>" class="sliders"></div></td><tr>
   <?php
 }
 ?>
+</table>
 <br/>
   <?php
 
