@@ -3,6 +3,15 @@
 
 include ("../includes/config.php");
 include ("../includes/opendb.php");
+$scores = explode(", ", $_POST['kittens']);
+
+$cnt = 0;
+foreach ( $_SESSION['group'] as $id => $name ) {
+	if ( $id != $_SESSION['userID'] ) {
+		mysql_query ('INSERT INTO Scores ( PrjID, SrcID, TargetID, Score )
+			VALUES ( ' . $_SESSION['prjID'] . ', ' . $_SESSION['userID'] . ', ' . $id . ', ' . $scores[$cnt++] . ');' );
+	}
+}
 
 // Get the behavior ID list
 $behaviorQueryString = ( 'SELECT B.BehaviorID
