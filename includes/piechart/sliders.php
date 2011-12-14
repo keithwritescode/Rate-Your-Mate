@@ -1,4 +1,4 @@
-<?php
+<?php 
 //need to grab maxPoints and groupSize from the data base.
 //$maxPoints = 44;
 //$groupSize = 11;
@@ -60,22 +60,28 @@ $(document).ready(function() {
 </head>
 
 <body style="font-size:62.5%;">
-<table border="1">
+<table border="1" align="center">
+<tr><th>Student Names</th><th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Group Relative Rating&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th></tr>
 <?php
-for($i=0; $i<$groupSize; $i++) {
+$cnt = 0;
+foreach( $_SESSION['group'] as $id => $name ) {
+	if ( $id != $_SESSION['userID'] ) {
   ?>  
 	<tr>
-	<td>name<?php echo $i; ?></td>
-  <td><div id="slider<?php echo $i;?>" class="sliders"></div></td><tr>
+	<td><?php echo $name; ?></td>
+  <td><div id="slider<?php echo $cnt++;?>" name="score[ <?php echo $id; ?> ]" class="sliders"></div></td><tr>
   <?php
+	}
 }
-?>
+
+	?>
 </table>
 <br/>
   <?php
 
   if($groupSize==1){
     //If group size == 1
+	// I know it looks so horrible =/ no time to fix it....
       echo   '<style type="text/css">' . "\n";
       echo        '#slider { margin: 10px; }' . "\n";
       echo      '</style>' . "\n";
