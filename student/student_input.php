@@ -32,6 +32,10 @@ print_r ($_SESSION['scores']);
 	<script type="text/javascript" charset="utf-8" src="../includes/piechart/local.js"></script>
 	<script type="text/javascript" charset="utf-8" src="../includes/piechart/sliderSynch.js"></script>
 	<link rel="stylesheet" type="text/css" href="../css/style.css" />
+	<style type="text/css" media="screen">
+		@import "../includes/piechart/piechart.css";
+	</style>
+			
 </head>
 <body>
 
@@ -77,15 +81,14 @@ print_r ($_SESSION['scores']);
 			echo '</div> </div>';
 		}
 		?>
-
+		<input class = "score" type = "hidden" name="kittens" Id = "scores">
 		<div id="piechart" >
 			<h4> Overall </h4>
-			<style type="text/css" media="screen">
-	 	@import "../includes/piechart/piechart.css";
-	</style>
 			
 			<?php include "../includes/piechart/index.php" ?>
-			<script type="text/javascript">  
+		</div>	
+		
+		<script type="text/javascript">  
 				var runit = 0;
 				if (runit == 0)
 				{
@@ -98,10 +101,7 @@ print_r ($_SESSION['scores']);
 				
 			
 			</script>
-		</div>
-		<input class = "score" type = "hidden" Id = "scores">
-		 
-		<input type = "button" value="Submit" onclick="JavaScript:submitIt()" />
+		
 		
 		<script type="text/javascript">  
 			function submitIt()
@@ -111,6 +111,12 @@ print_r ($_SESSION['scores']);
 				document.forms["submitForm"].submit();
 			}
 		</script>
+		
+		
+		 
+		<input type = "button" value="Submit" onclick="JavaScript:submitIt()" />
+		
+		
 		
 		
 	</form>
