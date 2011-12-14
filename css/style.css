@@ -109,7 +109,7 @@ ul, ol {
 }
 
 
-#border {
+#border, .submitDate {
 	height: 0px auto;
 	width: 300px;
 	padding: 10px;

@@ -23,55 +23,95 @@ include ("../includes/opendb.php");
    <form id="instructor_setup" name="instructorsetup"
             action="updateInstruct.php" method="post"  >
 	<p> Name 1 
-	<input type="number" class="score" id="1" name=score[1] value="6" min="0" max="25"/> </p>
+	<input type="range" class="score" id="1" name=score[1] value="6" min="0" max="25" onchange='changeScore("1")'/> </p>
 	<p> Name 2 
-	<input type="number" class="score" id="2" name=score[2] value="6" min="0" max="25"/> </p>
+	<input type="range" class="score" id="2" name=score[2] value="6" min="0" max="25" onchange="changeScore(2)"/> </p>
 	<p> Name 3 
-	<input type="number" class="score" id="3" name=score[3] value="6" min="0" max="25"/> </p>
+	<input type="range" class="score" id="3" name=score[3] value="6" min="0" max="25" onchange="changeScore(3)"/> </p>
 	<p> Name 4 
-	<input type="number" class="score" id="4" name=score[4] value="7" min="0" max="25"/> </p>
+	<input type="range" class="score" id="4" name=score[4] value="7" min="0" max="25" sonchange="changeScore(4)"/> </p>
    </form>
 </body>
 
 <script>
-$(function() {
-        changeScore( "#1" );
-	changeScore( "#2" );
-        changeScore( "#3" );
-        changeScore( "#4" );
 
-});
 // Make all lists droppable
 function changeScore (id) {
-	// Keep the number wihin the range no matter what
-        $('#' + id).keyup(function() {
-		var id = '#' + id;
-                var num = new Number( $( id ).attr('value') );
-                var max = new Number( $( id ).attr( 'max' ) );
+	// Get the total number of scores
+	var scoreLength = $( '.score' ).length;
+	// Total number of points
+	var totalPoints = <?php echo $totalPoints; ?> ;
 
-                if ( num > max ) {
-                        $( id ).attr( 'value', max )
-                }
-                $( id ).click();
-        });
-
-	$('#' + id).click(function() {
-		// Get the total number of scores
-	        var length = $( '.score' ).length;
-		// Total number of points
-		var totalPoints = <?php echo $totalPoints; ?>
-
+	var startingPoint = 0;
+	var total = 0;
+	// Get the sum of all the boxes
+	for( var i = 1; i < scoreLength; i++ ) {
+		// Save the starting point
+		if ( '#' + id == '#' + i ) {
+			startingPoint = i;
+		}
 		// Get the sum of all the boxes
-		var newScore = new Number( $('#groupText').attr('value') );
-        		newNum = Math.round(newNum); 
+		var newScore = new Number( $('#' + i).attr('value') );
 
-		// Start subtracting from the boxes directly below,
-		// If it hits 0, go to the next box
-		// When you go to the bottom loop up to the top
-		// Once all others are 0, the one being clicked must have all the points
-		
-	});
-
+		total += newScore;		
+	}
+	
+	// Subtract from the next one
+	if ( total > totalPoints ) {
+		var curr = startingPoint + 1;
+		var diff = total - totalPoints;
+		if ( curr > scoreLength ) {
+			curr = 1;
+		}
+		while ( curr != startingPoint ) {
+			// Decrement the one below down to 0
+			var changeScore = new Number( $('#' + curr).attr('value') );				
+			
+			// If all of it can be subtracted from the next one, do it
+			if ( diff <= changeScore ) {
+				$('#' + curr).attr( 'value', changeScore - diff );
+				break;
+			}
+			// Else subtract what you can then move on
+			else {
+				diff = diff - changeScore;
+				$('#' + curr).attr( 'value', 0 );
+			}
+			curr++;
+			// Bring back around to the first slider
+			if ( curr > scoreLength ) {
+				curr = 1;
+			}
+		}
+	}
+	// Subtract from the next one
+	if ( total < totalPoints ) {
+		var curr = startingPoint + 1;
+		var diff = totalPoints - total;
+		if ( curr > scoreLength ) {
+			curr = 1;
+		}
+		while ( curr != startingPoint ) {
+			// Decrement the one below down to 0
+			var changeScore = new Number( $('#' + curr).attr('value') );				
+			
+			// If all of it can be added from the next one, do it
+			if ( diff <= totalPoints - changeScore ) {
+				$('#' + curr).attr( 'value', changeScore + diff );
+				break;
+			}
+			// Else add all and move on
+			else {
+				diff = diff - changeScore;
+				$('#' + curr).attr( 'value', totalPoints );
+			}
+			curr++;
+			// Bring back around to the first slider
+			if ( curr > scoreLength ) {
+				curr = 1;
+			}
+		}
+	}
 }
 </script>
 
