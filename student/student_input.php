@@ -15,9 +15,9 @@ $prjID = $_SESSION['prjID'];
 $behaviorQuery = mysql_query( 'SELECT B.BehaviorID, B.Description
 				FROM Behaviors B
 				WHERE B.GrpID = ' . $_SESSION['groupID'] . ';') or die ( 'ERROR: Could not find group id' );	
-if (!empty($_SESSION['test']))
+if (!empty($_SESSION['scores']))
 {
-print_r ($_SESSION['test']);
+print_r ($_SESSION['scores']);
 }
 ?>
 
@@ -51,8 +51,8 @@ print_r ($_SESSION['test']);
 		<p>Please evaluate your group members on each behavior in your contract.</p>
 		</br>
 	</div>
-<form action="/student_input.php" method="POST" >
-	
+<form id = "submitForm" action="submitStudentInput.php" method="POST" >
+
 		<?php	
 		$behaviorCnt = 1;
 		// Go through each behavior
@@ -91,6 +91,7 @@ print_r ($_SESSION['test']);
 				{
 					$(function() {
 						setInterval("pc.setValues(pos)", 1);// run this once, a work around to the pie chart not auto rendering.
+						
 					});
 					runit = 1;
 				}
@@ -98,10 +99,20 @@ print_r ($_SESSION['test']);
 			
 			</script>
 		</div>
-		<input  name = "scores">
-		<script type="text/javascript"> document.getElementById("scores").value = pos[0]; </script> 
+		<input class = "score" type = "hidden" Id = "scores">
+		 
+		<input type = "button" value="Submit" onclick="JavaScript:submitIt()" />
 		
-		<input type="submit" value="Submit" />
+		<script type="text/javascript">  
+			function submitIt()
+			{
+				console.log(pos);
+				document.getElementById("scores").value = pos;
+				document.forms["submitForm"].submit();
+			}
+		</script>
+		
+		
 	</form>
 </body>
 
