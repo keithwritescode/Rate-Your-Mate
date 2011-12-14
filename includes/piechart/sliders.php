@@ -60,7 +60,8 @@ $(document).ready(function() {
 </head>
 
 <body style="font-size:62.5%;">
-<table border="1" >
+<table border="1" align="center">
+<tr><th>Student Names</th><th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Group Relative Rating&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th></tr>
 <?php
 $cnt = 0;
 foreach( $_SESSION['group'] as $id => $name ) {
