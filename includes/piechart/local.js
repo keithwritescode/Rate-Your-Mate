@@ -24,7 +24,12 @@
         test = document.getElementById("test");
         ivalid = document.getElementById("valid");
         var form = document.getElementById("pie-form");
-        if (form && test) {
+        
+	if (form && test) {
+		//inserted these next 3 lines to make it update a lot
+		eval("initial = [" + test.value + "]");
+                pc.setValues(initial);
+                test.value = initial;
             form.onsubmit = function(){
                 if (test.valid) {
                     if (test.digits) {

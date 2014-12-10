@@ -1,0 +1,225 @@
+body {
+	margin: 0;
+	padding: 0;
+	background-image:url('images/floor.jpg');
+	font-family: Lucida Console;
+	font-size: 12px;
+	color: #878282;
+}
+
+h1 {
+	text-decoration: overline underline;
+	text-transform: uppercase;
+	font-family: Lucida Console;
+	font-size: 3em;
+	padding: 10px 0px 20px 0px;
+	letter-spacing: 3px;
+	color: #878282;
+
+	text-shadow: black 0.1em 0.1em 0.2em;
+}
+
+h2, h3, h4{
+	text-shadow: black 0.2em 0.2em 0.4em;
+}
+
+p, ul, ol {
+	margin-top: 0;
+	line-height: 200%;
+}
+
+p, ol {
+}
+
+ul, ol {
+}
+
+#header {
+	text-align: center;	
+	width: 0px auto;
+	height: 50px;
+	margin: 0 auto;
+	padding: 0px;
+}	
+
+/* Menu */
+
+#menu {
+	width: 800px;
+	height: 70px;
+	margin: 0 auto;
+	padding: 0px;
+	background: #000000;
+}
+
+#menu ul {
+	margin: 0;
+	padding: 0px 0px 0px 0px;
+	list-style: none;
+	line-height: normal;
+	text-align: center;
+}
+
+#menu li {
+	display: inline-block;
+	padding: 15px 30px 0px 30px;
+}
+
+#menu a {
+	height: 20px;
+	margin: 0px;
+	padding: 0px;
+	letter-spacing: -1px;
+	text-decoration: none;
+	text-align: center;
+	text-transform: uppercase;
+	font-family: Lucida Console;
+	font-size: 13px;
+	font-weight: bold;
+	color: #FFFFFF;
+	border: none;
+}
+
+/* Page */
+
+#page {
+	overflow: hidden;
+	width: 780px;
+	margin: 0px auto;
+	padding: 40px 10px 20px 10px;
+	background: #000000;
+}
+
+
+#content {
+	margin: 0 auto;
+	/*or background: #444444*/
+	background: #F;
+	padding: 15px 30px 15px 30px;
+	border: 4px dashed #333;
+	width: 680px;
+
+	text-shadow: black 0.1em 0.1em 0.2em;	
+	text-align: left;
+	text-transform: uppercase;
+        font-family: Lucida Console;
+        font-size: 13px;
+        font-weight: bold;
+        color: #a4a4a4;
+} 
+
+
+#border, .submitDate {
+	height: 0px auto;
+	width: 300px;
+	padding: 10px;
+	margin: 10px;	
+	border: 5px solid gray;
+}
+
+#border1, #behaviors {
+	height: 0px auto;
+	width: 420px;
+	padding: 10px;
+	margin: 10px;
+	border: 5px solid gray;
+}
+
+#border2 {
+	height: 0px auto;
+	width: 0px auto;
+	padding: 10px;
+	margin: 10px;
+	border: 5px solid gray;
+}
+
+#border3 {
+	height: 0px auto;
+	width: 450px;
+	padding: 10px 10px 10px 10px;
+	border: 5px solid gray;
+}
+
+#rosterSource {
+	position: relative;
+	width: 200px;
+	top: 0px;
+	padding: 1px 1px 1px 1px;
+	right: 75px;
+	height: 100px;
+}	
+
+#groups {	
+	text-shadow: none;
+	margin: 10px;
+	font: 10px verdana, sans-serif;
+	width: 210px;
+	height: 0px auto;
+}
+
+#groups-1{	
+	width: 165px;
+	text-align: left;	
+}
+
+#groups-2{
+	widht: 0px auto;
+	height: 10px;
+}
+
+
+#contractSubmission {
+	margin: 15px;		
+}
+
+#gradeSubmit {
+	padding: 0px auto;
+	margin: 13px;
+}
+
+#submitDate {
+	float: left;
+	width: 300px;
+	margin: 10px;
+
+	text-align: center;	
+}
+
+#submitDate1 {
+	width: 300px;
+	margin: 10px;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	width: 70%;
+	float: right;
+	width: 300px;
+	marding: 10px;
+	text-align: center;
+}
+
+#projectSelect {
+	text-align: center;
+	width:320px;
+	padding: 5px;
+	border: 5px solid gray;
+	margin: 0px auto;
+}
+
+#behaviors1 {
+	text-align: center;
+	font-size: 14px;
+	position: relative;
+        top: -275px;
+	right: -335px;
+	margin: 0px;
+
+}
+
+#behabviors {
+	text-align: center;
+	font-size: 14px;
+	position: relative;
+	top: 40px;
+	margin 0px;
+}

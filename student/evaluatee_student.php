@@ -1,37 +1,43 @@
+<?php include ("../includes/check_authorization.php");
+error_reporting(-1);
 
+// Connect to the database
+include ("../includes/config.php");
+include ("../includes/opendb.php");
+
+?>
 <html>
-
-
-<div id="head">
-
 <head>
+	<link rel="stylesheet" type="text/css" href="../css/dateStyle.css" />
+	<link rel="stylesheet" type="text/css" href="../css/style.css" />
 
         <title>Rate Your Mate</title>
-
-
 </head>
 
-<h2>Student Evaluation Page</h2>
-
+<body>
+<div id="header">
+	<h1>Student Evaluation Page</h1>
 </div>
 
 <div id="menu">
-
-
-<?php include ("../includes/menu.php"); ?>
-
-
+	<?php include ("../includes/student_menu.php"); ?>
 </div>
 
 
 <div id="content">
+	<p> Below is your group members evaluation of your work based on behaviors in their contract. </p>
 
+	<?php
+	$query="SELECT c.Comment, c.SrcId FROM Comments c";
 
+<<<<<<< HEAD
 <p align="left">
 
 
 <strong>Student Reviews<strong>
 
+</br>
+</br>
 
 <font size="2" >Below is your group members evaluation of your work based on behaviors in their contract.</font>
 
@@ -39,25 +45,54 @@
 
 </p>
 
+<div id="border4">
+<?php
+$query="SELECT c.Comment, c.SrcId FROM Comments c";
 
+$result=mysql_query($query);
 
+echo "<table border='none', cell spacing='10',
 
-<p align="left">
-<strong>Behavior One</strong>
+<tr>
+<th><font color=#222222><font size=+1>Student Reviews</th></font></font>
+<th><font color=#222222><font size=+1>Comments</th></font></font>
+</tr>";
 
+while($row = mysql_fetch_array($result))
+  {
 
+ echo "<tr>";
 
-</p>
+ echo "<td width=3%>" . "<font color=#223333>" . "<font size=+1>" . $row['Comment'] . "</td>" . "</font>" . "</font>";
+ 
+ echo "<td width=3%>" . "<font color=#223333>" . "<font size=+1>" . $row['SrcId'] . "</td>". "</font>". "</font>";
 
-</br>
+ echo "</tr>";
+ }
 
-<form action="process.php" method="POST">
+echo "</table>";
+=======
+	$result=mysql_query($query);
+>>>>>>> 400e90254d2fe5d67cd64ce0af0d07e49fad8b81
 
-<textarea wrap="virutal" name="comments" rows="5" cols="50">Holder for student reviews</textarea>
+	echo "<table border='1'>
+		<tr>
+		<th>Student Reviews</th>
+		<th>Comments</th>
+		</tr>";
 
+	while($row = mysql_fetch_array($result)) {
+	 echo "<tr>";
+	 echo "<td>" . $row['Comment'] . "</td>";
+	 echo "<td>" . $row['SrcId'] . "</td>";
+	 echo "</tr>";
+  	}
 
+	echo "</table>";
+?>
 
-
+<<<<<<< HEAD
+</div>
 
 </br>
 
@@ -72,6 +107,8 @@
 
 
 
+=======
+>>>>>>> 400e90254d2fe5d67cd64ce0af0d07e49fad8b81
 </div>
 
 </body>
